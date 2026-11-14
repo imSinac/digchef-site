@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>آشپزخونه | دستیار هوشمند آشپزی</title>
-    <!-- Load Vazirmatn Font from Google Fonts -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ==========================================================================
-           CSS Variables & Theme Definitions
-           ========================================================================== */
         :root {
             --bg-main: #FAF7F2;
             --bg-surface: #FFFFFF;
@@ -52,9 +49,6 @@
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
         }
 
-        /* ==========================================================================
-           Base & Reset Styles (Mobile-Only Container)
-           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -77,7 +71,6 @@
             background-color: #080808;
         }
 
-        /* Mobile viewport wrapper (max 480px) */
         .app-container {
             width: 100%;
             max-width: 480px;
@@ -115,7 +108,6 @@
             display: none !important;
         }
 
-        /* View Transition Animation */
         .view-page {
             animation: fadeView 0.22s ease;
         }
@@ -125,9 +117,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ==========================================================================
-           Top Navigation Header (Shared / Adaptive)
-           ========================================================================== */
         .top-navbar {
             position: sticky;
             top: 0;
@@ -207,7 +196,6 @@
             justify-content: center;
         }
 
-        /* Back Button in Detail Header */
         .back-nav-btn {
             display: inline-flex;
             align-items: center;
@@ -226,7 +214,6 @@
             transform: scale(0.95);
         }
 
-        /* Wake Lock Pill Button */
         .wake-lock-btn {
             display: flex;
             align-items: center;
@@ -260,9 +247,6 @@
             box-shadow: 0 0 8px var(--accent);
         }
 
-        /* ==========================================================================
-           HOME VIEW: Search Bar, Category Pills, Chef Featured & Cards Grid
-           ========================================================================== */
         .home-view-wrapper {
             padding-bottom: 36px;
         }
@@ -317,7 +301,6 @@
             justify-content: center;
         }
 
-        /* Category Horizontal Scroll Pills */
         .categories-scroll {
             display: flex;
             gap: 8px;
@@ -350,7 +333,6 @@
             box-shadow: 0 4px 12px rgba(234, 88, 12, 0.28);
         }
 
-        /* Featured Chef Suggestion Card */
         .featured-section {
             padding: 6px 16px 16px;
         }
@@ -435,7 +417,6 @@
             font-weight: 500;
         }
 
-        /* Home Recipes List Section */
         .recipes-list-section {
             padding: 4px 16px;
         }
@@ -596,7 +577,6 @@
             color: var(--accent);
         }
 
-        /* Empty Search / Bookmark State */
         .empty-state-box {
             text-align: center;
             padding: 40px 20px;
@@ -634,9 +614,6 @@
             border-radius: var(--radius-full);
         }
 
-        /* ==========================================================================
-           RECIPE DETAIL VIEW STYLES
-           ========================================================================== */
         .detail-view-wrapper {
             padding-bottom: 96px;
         }
@@ -747,7 +724,6 @@
             color: var(--accent);
         }
 
-        /* Section Shared Styles */
         .content-section {
             padding: 8px 16px 20px;
         }
@@ -776,7 +752,6 @@
             border-radius: 4px;
         }
 
-        /* Servings Calculator & Ingredients */
         .servings-bar {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -794,7 +769,6 @@
             font-weight: 600;
         }
 
-        /* Strictly LTR controls: - on left, + on right */
         .servings-controls {
             display: flex;
             align-items: center;
@@ -826,24 +800,6 @@
             min-width: 52px;
             text-align: center;
             direction: rtl;
-        }
-
-        .audio-pill-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: var(--radius-full);
-            background-color: var(--accent-soft);
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 700;
-            transition: all var(--transition);
-        }
-
-        .audio-pill-btn.playing {
-            background-color: var(--accent);
-            color: #FFFFFF;
         }
 
         .ingredients-card {
@@ -933,7 +889,6 @@
             opacity: 0.45;
         }
 
-        /* Vertical Steps List */
         .steps-list {
             display: flex;
             flex-direction: column;
@@ -997,7 +952,6 @@
             color: var(--text-primary);
         }
 
-        /* Sticky Bottom Floating Action Bar (Enter Cook Mode) */
         .bottom-cta-bar {
             position: fixed;
             bottom: 0;
@@ -1032,9 +986,6 @@
             transform: scale(0.98);
         }
 
-        /* ==========================================================================
-           COOK MODE (Full-Screen Solid Background Story View + Bottom Audio Player)
-           ========================================================================== */
         .cook-mode-overlay {
             position: fixed;
             top: 0;
@@ -1058,7 +1009,6 @@
             transform: translateY(0);
         }
 
-        /* Story Segmented Progress Bar (Strictly LTR) */
         .cook-top-bar {
             padding: 14px 16px 8px;
             background-color: var(--bg-main);
@@ -1093,7 +1043,6 @@
             width: 100%;
         }
 
-        /* Header inside Cook Mode: Right side has Close (X) + Ingredients, Left side has Step Counter */
         .cook-header-controls {
             display: flex;
             align-items: center;
@@ -1138,7 +1087,6 @@
             color: var(--accent);
         }
 
-        /* Middle Swipeable Card Area */
         .cook-card-stage {
             flex: 1;
             display: flex;
@@ -1184,7 +1132,6 @@
             margin: auto 0;
         }
 
-        /* Strictly LTR Prev/Next bar below card */
         .swipe-hint-bar {
             margin-top: 22px;
             padding-top: 14px;
@@ -1212,7 +1159,6 @@
             pointer-events: none;
         }
 
-        /* Sticky Bottom Audio Player Deck (Cook Mode) */
         .cook-audio-player {
             background-color: var(--bg-surface);
             border-top: 1px solid var(--border-color);
@@ -1266,7 +1212,6 @@
             box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
         }
 
-        /* Strictly LTR Player Controls: Prev on Left, Next on Right */
         .player-controls-row {
             display: flex;
             align-items: center;
@@ -1319,7 +1264,6 @@
             fill: currentColor;
         }
 
-        /* Quick Ingredients Drawer inside Cook Mode */
         .ingredients-drawer-backdrop {
             position: fixed;
             inset: 0;
@@ -1381,9 +1325,7 @@
 
     <div class="app-container">
 
-        <!-- ======================================================================
-             VIEW 1: HOME VIEW (Search, Categories, Featured, Recipe Cards)
-             ====================================================================== -->
+        <!-- VIEW 1: HOME VIEW -->
         <div id="homeView" class="view-page home-view-wrapper">
             <header class="top-navbar">
                 <div class="brand-title">
@@ -1396,15 +1338,13 @@
                 </div>
 
                 <div class="nav-actions">
-                    <!-- Saved Bookmarks Filter Toggle -->
-                    <button type="button" id="bookmarksFilterBtn" class="icon-btn" aria-label="علاقه‌مندی‌ها" title="نمایش دستورهای ذخیره شده">
+                    <button type="button" id="bookmarksFilterBtn" class="icon-btn" aria-label="علاقه‌مندی‌ها">
                         <svg viewBox="0 0 24 24">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                         </svg>
                         <span id="bookmarkCountBadge" class="bookmark-count-badge hidden">۰</span>
                     </button>
 
-                    <!-- Dark Mode Toggle -->
                     <button type="button" id="homeThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
                         <svg class="theme-icon-svg" viewBox="0 0 24 24">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -1413,7 +1353,6 @@
                 </div>
             </header>
 
-            <!-- Real-time Search Box (Title or Ingredient) -->
             <div class="search-section">
                 <div class="search-box">
                     <svg class="search-icon" viewBox="0 0 24 24">
@@ -1430,30 +1369,24 @@
                 </div>
             </div>
 
-            <!-- Horizontal Category Pills -->
             <div id="categoryPillsContainer" class="categories-scroll"></div>
 
-            <!-- Chef Daily Suggestion Hero Card (Hidden when filtering/searching) -->
             <section id="featuredSection" class="featured-section">
                 <div id="featuredCardContainer"></div>
             </section>
 
-            <!-- Recipe Cards List -->
             <section class="recipes-list-section">
                 <div class="list-header-row">
-                    <h2 id="listSectionTitle" class="section-title">دستور پخت‌های محبوب</h2>
-                    <span id="recipesCountLabel" class="list-count-text">۵ دستور</span>
+                    <h2 id="listSectionTitle" class="section-title">همه دستور پخت‌ها</h2>
+                    <span id="recipesCountLabel" class="list-count-text">۰ دستور</span>
                 </div>
 
                 <div id="recipesGrid" class="recipe-cards-grid"></div>
             </section>
         </div>
 
-        <!-- ======================================================================
-             VIEW 2: RECIPE DETAIL VIEW (Vertical Overview + Fullscreen Cook Mode)
-             ====================================================================== -->
+        <!-- VIEW 2: RECIPE DETAIL VIEW -->
         <div id="detailView" class="view-page detail-view-wrapper hidden">
-            <!-- Detail Top Navbar -->
             <header class="top-navbar">
                 <button type="button" id="backToHomeBtn" class="back-nav-btn">
                     <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
@@ -1463,13 +1396,11 @@
                 </button>
 
                 <div class="nav-actions">
-                    <!-- Screen Wake Lock Button -->
-                    <button type="button" id="wakeLockBtn" class="wake-lock-btn" title="جلوگیری از خاموش شدن صفحه موبایل">
+                    <button type="button" id="wakeLockBtn" class="wake-lock-btn">
                         <span class="wake-dot"></span>
                         <span id="wakeLockText">روشن ماندن صفحه</span>
                     </button>
 
-                    <!-- Dark Mode Toggle Button -->
                     <button type="button" id="detailThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
                         <svg class="theme-icon-svg" viewBox="0 0 24 24">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -1478,7 +1409,6 @@
                 </div>
             </header>
 
-            <!-- Hero Section: Dish Image & Overview Meta -->
             <section class="hero-section">
                 <div class="dish-image-wrapper">
                     <img id="dishImage" class="dish-image" src="" alt="تصویر غذا" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Food+Photo'">
@@ -1495,11 +1425,11 @@
 
                 <div class="meta-grid">
                     <div class="meta-item">
-                        <span class="meta-label">آماده‌سازی</span>
+                        <span class="meta-label">زمان پخت</span>
                         <span id="prepTime" class="meta-value"></span>
                     </div>
                     <div class="meta-item">
-                        <span class="meta-label">زمان پخت</span>
+                        <span class="meta-label">کالری</span>
                         <span id="cookTime" class="meta-value"></span>
                     </div>
                     <div class="meta-item">
@@ -1509,19 +1439,11 @@
                 </div>
             </section>
 
-            <!-- Ingredients Section with Dynamic Servings Calculator -->
             <section class="content-section">
                 <div class="section-header">
                     <h2 class="section-title">مواد لازم</h2>
-                    <button type="button" id="playIngredientsBtn" class="audio-pill-btn">
-                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
-                            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-                        </svg>
-                        <span id="playIngredientsText">شنیدن مواد لازم</span>
-                    </button>
                 </div>
 
-                <!-- Servings Multiplier Bar (LTR controls: - on left, + on right) -->
                 <div class="servings-bar">
                     <span class="servings-label">تعداد نفرات:</span>
                     <div class="servings-controls">
@@ -1531,11 +1453,9 @@
                     </div>
                 </div>
 
-                <!-- Checkable Ingredients List -->
                 <div id="ingredientsList" class="ingredients-card"></div>
             </section>
 
-            <!-- Step-by-Step Instructions Section (Vertical Overview) -->
             <section class="content-section">
                 <div class="section-header">
                     <h2 class="section-title">مراحل پخت قدم به قدم</h2>
@@ -1543,7 +1463,6 @@
                 <div id="stepsVerticalList" class="steps-list"></div>
             </section>
 
-            <!-- Sticky Bottom Button to Launch Full-Screen Cook Mode -->
             <div class="bottom-cta-bar">
                 <button type="button" id="openCookModeBtn" class="start-cook-btn">
                     <svg viewBox="0 0 24 24">
@@ -1554,17 +1473,12 @@
             </div>
         </div>
 
-        <!-- ======================================================================
-             FULL-SCREEN COOK MODE OVERLAY (Horizontal Card Slider + Bottom Player)
-             ====================================================================== -->
+        <!-- FULL-SCREEN COOK MODE OVERLAY -->
         <div id="cookModeOverlay" class="cook-mode-overlay" aria-hidden="true">
-            <!-- Top Segmented Progress & Controls -->
             <div class="cook-top-bar">
-                <!-- Strictly LTR Story Progress Bar -->
                 <div id="storySegments" class="story-segments"></div>
 
                 <div class="cook-header-controls">
-                    <!-- Action buttons on the right: X button at far right, Ingredients button to its left -->
                     <div class="cook-header-right">
                         <button type="button" id="closeCookModeBtn" class="close-cook-btn" aria-label="بستن حالت آشپزی">
                             <svg viewBox="0 0 24 24">
@@ -1586,12 +1500,10 @@
                         </button>
                     </div>
 
-                    <!-- Step counter on the left -->
-                    <span id="cookStepCounter" class="cook-step-counter">مرحله ۱ از ۶</span>
+                    <span id="cookStepCounter" class="cook-step-counter">مرحله ۱</span>
                 </div>
             </div>
 
-            <!-- Swipeable Step Card Stage -->
             <div id="cookCardStage" class="cook-card-stage">
                 <div id="cookStepCard" class="cook-step-card">
                     <div>
@@ -1601,7 +1513,6 @@
                         <p id="cookInstructionText" class="cook-instruction-text"></p>
                     </div>
 
-                    <!-- Strictly LTR Prev/Next buttons below card -->
                     <div class="swipe-hint-bar">
                         <button type="button" id="cardPrevBtn" class="nav-step-inline-btn">
                             <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
@@ -1620,18 +1531,16 @@
                 </div>
             </div>
 
-            <!-- Sticky Bottom Audio Player -->
             <div class="cook-audio-player">
                 <div class="player-status-row">
                     <span id="playerStatusLabel">آماده پخش صوت مرحله</span>
-                    <span id="playerTimeDisplay" class="time-display">۰۰:۰۰ / ۰۰:۱۲</span>
+                    <span id="playerTimeDisplay" class="time-display">۰۰:۰۰ / ۰۰:۰۰</span>
                 </div>
 
                 <div class="scrubber-container">
                     <input type="range" id="audioScrubber" class="audio-scrubber" min="0" max="100" value="0">
                 </div>
 
-                <!-- Strictly LTR Player Controls: Prev on Left, Next on Right -->
                 <div class="player-controls-row">
                     <button type="button" id="playerPrevBtn" class="player-nav-btn">
                         <svg viewBox="0 0 24 24">
@@ -1658,7 +1567,6 @@
             </div>
         </div>
 
-        <!-- Quick Ingredients Modal Drawer inside Cook Mode -->
         <div id="ingredientsDrawerBackdrop" class="ingredients-drawer-backdrop">
             <div class="ingredients-drawer">
                 <div class="drawer-header">
@@ -1677,16 +1585,13 @@
     </div>
 
     <script>
-        /* ==========================================================================
-           1. STATIC RECIPES DATABASE (Ready to be generated by Python SQLite Script)
-           ========================================================================== */
         const categoriesList = [
-            "همه",
-            "چلو و پلو",
-            "خورشت",
-            "کباب و گریل",
-            "فرنگی و پاستا",
-            "سوپ و آش"
+            { id: "همه", title: "همه" },
+            { id: "polo", title: "چلو و پلو" },
+            { id: "khoresht", title: "خورشت" },
+            { id: "kebab", title: "کباب و گریل" },
+            { id: "pasta", title: "فرنگی و پاستا" },
+            { id: "soup", title: "سوپ و آش" }
         ];
 
         const recipesData = [
@@ -1724,61 +1629,105 @@
   }
 ];
 
-        /* ==========================================================================
-           2. APPLICATION STATE & HELPERS
-           ========================================================================== */
-        let currentView = 'home'; // 'home' | 'detail'
+        // Normalize data generated by cms.py so both old and new schemas work seamlessly
+        function normalizeRecipe(r) {
+            const steps = (r.steps || []).map((s, idx) => ({
+                stepNumber: s.stepNumber || (idx + 1),
+                title: s.title || `مرحله ${idx + 1}`,
+                text: s.text || '',
+                audioUrl: s.audio || s.audioUrl || ''
+            }));
+            const ingredients = (r.ingredients || []).map((ing, idx) => ({
+                id: ing.id !== undefined ? ing.id : (idx + 1),
+                name: ing.name || '',
+                amount: parseFloat(ing.amount) || 1,
+                unit: ing.unit || '',
+                fixed: !!ing.fixed
+            }));
+            return {
+                id: String(r.id),
+                slug: r.slug || String(r.id),
+                title: r.title || '',
+                subtitle: r.subtitle || `طرز تهیه ${r.title || ''} به صورت قدم به قدم و صوتی`,
+                category: r.category || '',
+                catName: r.catName || r.category || 'آشپزی',
+                isFeatured: Boolean(r.featured !== undefined ? r.featured : r.isFeatured),
+                image: r.image || '',
+                prepTime: r.time || r.prepTime || '۶۰ دقیقه',
+                cookTime: r.calories || r.cookTime || '۵۰۰ کالری',
+                difficulty: r.difficulty || 'متوسط',
+                defaultServings: Number(r.defaultServings) || 4,
+                ingredients,
+                steps
+            };
+        }
+
+        let normalizedRecipes = [];
+        let currentView = 'home';
         let selectedCategory = 'همه';
         let searchQuery = '';
         let onlySavedFilter = false;
-        let savedRecipeIds = new Set(JSON.parse(localStorage.getItem('saved_recipes') || '[]'));
+        let savedRecipeIds = new Set((JSON.parse(localStorage.getItem('saved_recipes') || '[]')).map(String));
 
-        // Current Active Recipe in Detail View
-        let activeRecipe = recipesData[0];
-        let currentServings = activeRecipe.defaultServings;
+        let activeRecipe = null;
+        let currentServings = 4;
         const checkedIngredients = new Set();
         let currentCookStepIndex = 0;
         let isCookModeOpen = false;
 
-        // Audio Playback Engine (Real HTMLAudioElement + Simulated Fallback Timer)
-        let activeAudioId = null; // 'ingredients' or stepIndex (0, 1, 2...)
+        let activeAudioId = null;
         let isPlaying = false;
         let currentAudioTime = 0;
-        let currentAudioDuration = 12;
-        let audioTimerInterval = null;
+        let currentAudioDuration = 0;
         let realAudioElement = new Audio();
         let audioCtx = null;
 
-        // Convert English numbers to Persian digits
+        realAudioElement.addEventListener('loadedmetadata', () => {
+            if (realAudioElement.duration && isFinite(realAudioElement.duration)) {
+                currentAudioDuration = realAudioElement.duration;
+                syncAllAudioUI();
+            }
+        });
+
+        realAudioElement.addEventListener('timeupdate', () => {
+            currentAudioTime = realAudioElement.currentTime;
+            if (realAudioElement.duration && isFinite(realAudioElement.duration)) {
+                currentAudioDuration = realAudioElement.duration;
+            }
+            syncAllAudioUI();
+        });
+
+        realAudioElement.addEventListener('ended', () => {
+            isPlaying = false;
+            currentAudioTime = 0;
+            playFeedbackTone(760, 120);
+            syncAllAudioUI();
+        });
+
         function toPersianDigits(num) {
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
-        // Format clean ingredient numbers
         function formatQuantity(val) {
             const rounded = Math.round(val * 100) / 100;
             return toPersianDigits(rounded).replace('.', '٫');
         }
 
-        // Format seconds into MM:SS in Persian digits
         function formatTime(seconds) {
-            const sec = Math.max(0, Math.floor(seconds));
+            const sec = Math.max(0, Math.floor(seconds || 0));
             const m = String(Math.floor(sec / 60)).padStart(2, '0');
             const s = String(sec % 60).padStart(2, '0');
             return `${toPersianDigits(m)}:${toPersianDigits(s)}`;
         }
 
-        // Subtle synthesized chime when starting/changing audio
         function playFeedbackTone(freq = 520, durationMs = 90) {
             try {
                 if (!audioCtx) {
                     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
                     audioCtx = new AudioContextClass();
                 }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (audioCtx.state === 'suspended') audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
@@ -1789,19 +1738,14 @@
                 gain.connect(audioCtx.destination);
                 osc.start();
                 osc.stop(audioCtx.currentTime + durationMs / 1000);
-            } catch (e) {
-                // Ignore Web Audio errors if blocked
-            }
+            } catch (e) {}
         }
 
-        /* ==========================================================================
-           3. HOME VIEW RENDERING & FILTERING
-           ========================================================================== */
         function renderHomeCategories() {
             const container = document.getElementById('categoryPillsContainer');
             container.innerHTML = categoriesList.map(cat => `
-                <button type="button" class="category-pill ${selectedCategory === cat ? 'active' : ''}" data-cat="${cat}">
-                    ${cat}
+                <button type="button" class="category-pill ${selectedCategory === cat.id ? 'active' : ''}" data-cat="${cat.id}">
+                    ${cat.title}
                 </button>
             `).join('');
 
@@ -1818,13 +1762,17 @@
             const section = document.getElementById('featuredSection');
             const container = document.getElementById('featuredCardContainer');
 
-            // Hide featured card when user is searching, filtering by category, or viewing saved items
-            if (searchQuery.trim() !== '' || selectedCategory !== 'همه' || onlySavedFilter) {
+            if (
+                normalizedRecipes.length === 0 ||
+                searchQuery.trim() !== '' ||
+                selectedCategory !== 'همه' ||
+                onlySavedFilter
+            ) {
                 section.classList.add('hidden');
                 return;
             }
 
-            const featuredRecipe = recipesData.find(r => r.isFeatured) || recipesData[0];
+            const featuredRecipe = normalizedRecipes.find(r => r.isFeatured) || normalizedRecipes[0];
             section.classList.remove('hidden');
 
             container.innerHTML = `
@@ -1849,7 +1797,7 @@
                         <div class="featured-info">
                             <h2>${featuredRecipe.title}</h2>
                             <div class="featured-meta">
-                                <span>⏱ پخت: ${featuredRecipe.cookTime}</span>
+                                <span>⏱ زمان: ${featuredRecipe.prepTime}</span>
                                 <span>•</span>
                                 <span>🔥 سختی: ${featuredRecipe.difficulty}</span>
                                 <span>•</span>
@@ -1861,7 +1809,7 @@
             `;
 
             container.querySelector('.featured-card').addEventListener('click', () => {
-                openRecipeDetail(featuredRecipe.id);
+                openRecipe(featuredRecipe.id);
             });
         }
 
@@ -1875,32 +1823,32 @@
 
             const normalizedQuery = searchQuery.trim().toLowerCase();
 
-            const filtered = recipesData.filter(recipe => {
-                // 1. Saved Bookmarks filter
-                if (onlySavedFilter && !savedRecipeIds.has(recipe.id)) {
+            const filtered = normalizedRecipes.filter(recipe => {
+                if (onlySavedFilter && !savedRecipeIds.has(String(recipe.id))) {
                     return false;
                 }
-                // 2. Category filter
-                if (selectedCategory !== 'همه' && recipe.category !== selectedCategory) {
+                if (
+                    selectedCategory !== 'همه' &&
+                    recipe.category !== selectedCategory &&
+                    recipe.catName !== selectedCategory
+                ) {
                     return false;
                 }
-                // 3. Search query filter (checks Title, Subtitle, or Ingredients names)
                 if (normalizedQuery !== '') {
                     const inTitle = recipe.title.toLowerCase().includes(normalizedQuery);
-                    const inSub = recipe.subtitle.toLowerCase().includes(normalizedQuery);
                     const inIng = recipe.ingredients.some(i => i.name.toLowerCase().includes(normalizedQuery));
-                    return inTitle || inSub || inIng;
+                    return inTitle || inIng;
                 }
                 return true;
             });
 
-            // Update section title based on active filter
             if (onlySavedFilter) {
                 titleEl.textContent = 'دستورهای ذخیره شده شما';
             } else if (normalizedQuery !== '') {
                 titleEl.textContent = `نتایج جستجو برای «${searchQuery}»`;
             } else if (selectedCategory !== 'همه') {
-                titleEl.textContent = `دسته‌بندی: ${selectedCategory}`;
+                const catObj = categoriesList.find(c => c.id === selectedCategory);
+                titleEl.textContent = `دسته‌بندی: ${catObj ? catObj.title : selectedCategory}`;
             } else {
                 titleEl.textContent = 'همه دستور پخت‌ها';
             }
@@ -1933,12 +1881,12 @@
             }
 
             grid.innerHTML = filtered.map(recipe => {
-                const isSaved = savedRecipeIds.has(recipe.id);
+                const isSaved = savedRecipeIds.has(String(recipe.id));
                 return `
                     <article class="home-recipe-card" data-recipe-id="${recipe.id}">
                         <div class="card-thumb-wrapper">
                             <img class="card-thumb-img" src="${recipe.image}" alt="${recipe.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Food+Photo'">
-                            <span class="card-category-badge">${recipe.category}</span>
+                            <span class="card-category-badge">${recipe.catName}</span>
 
                             <button type="button" class="card-bookmark-btn ${isSaved ? 'saved' : ''}" data-bookmark-id="${recipe.id}" aria-label="افزودن به علاقه‌مندی‌ها">
                                 <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
@@ -1965,7 +1913,7 @@
                                             <circle cx="12" cy="12" r="10"/>
                                             <polyline points="12 6 12 12 16 14"/>
                                         </svg>
-                                        ${recipe.cookTime}
+                                        ${recipe.prepTime}
                                     </span>
                                     <span class="meta-pill-inline">
                                         <svg viewBox="0 0 24 24">
@@ -1983,17 +1931,14 @@
                 `;
             }).join('');
 
-            // Bind card click to open detail view
             grid.querySelectorAll('.home-recipe-card').forEach(card => {
                 card.addEventListener('click', e => {
-                    // Prevent opening card if user clicked the heart bookmark button
                     if (e.target.closest('.card-bookmark-btn')) return;
                     const id = card.getAttribute('data-recipe-id');
-                    openRecipeDetail(id);
+                    openRecipe(id);
                 });
             });
 
-            // Bind bookmark toggle buttons on cards
             grid.querySelectorAll('.card-bookmark-btn').forEach(btn => {
                 btn.addEventListener('click', e => {
                     e.stopPropagation();
@@ -2004,10 +1949,11 @@
         }
 
         function toggleBookmark(recipeId) {
-            if (savedRecipeIds.has(recipeId)) {
-                savedRecipeIds.delete(recipeId);
+            const strId = String(recipeId);
+            if (savedRecipeIds.has(strId)) {
+                savedRecipeIds.delete(strId);
             } else {
-                savedRecipeIds.add(recipeId);
+                savedRecipeIds.add(strId);
                 playFeedbackTone(640, 70);
             }
             localStorage.setItem('saved_recipes', JSON.stringify(Array.from(savedRecipeIds)));
@@ -2029,18 +1975,15 @@
         function syncDetailBookmarkUI() {
             const btn = document.getElementById('detailBookmarkBtn');
             if (!btn || !activeRecipe) return;
-            if (savedRecipeIds.has(activeRecipe.id)) {
+            if (savedRecipeIds.has(String(activeRecipe.id))) {
                 btn.classList.add('saved');
             } else {
                 btn.classList.remove('saved');
             }
         }
 
-        /* ==========================================================================
-           4. NAVIGATION BETWEEN HOME VIEW & RECIPE DETAIL VIEW
-           ========================================================================== */
-        function openRecipeDetail(recipeId) {
-            const found = recipesData.find(r => r.id === recipeId);
+        function openRecipe(recipeId) {
+            const found = normalizedRecipes.find(r => String(r.id) === String(recipeId) || r.slug === String(recipeId));
             if (!found) return;
 
             stopAudioInternal();
@@ -2050,7 +1993,6 @@
             checkedIngredients.clear();
             currentCookStepIndex = 0;
 
-            // Populate Detail View DOM
             document.getElementById('dishImage').src = activeRecipe.image;
             document.getElementById('difficultyBadge').textContent = `سختی: ${activeRecipe.difficulty}`;
             document.getElementById('recipeTitle').textContent = activeRecipe.title;
@@ -2065,12 +2007,14 @@
             renderStorySegments();
             updateCookModeSlide();
 
-            // Switch Views
             currentView = 'detail';
             document.getElementById('homeView').classList.add('hidden');
             document.getElementById('detailView').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Alias for compatibility
+        const openRecipeDetail = openRecipe;
 
         function backToHomeView() {
             stopAudioInternal();
@@ -2084,9 +2028,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* ==========================================================================
-           5. RENDER DETAIL VIEW INGREDIENTS & STEPS
-           ========================================================================== */
         function renderIngredients() {
             const listEl = document.getElementById('ingredientsList');
             const drawerListEl = document.getElementById('drawerIngredientsList');
@@ -2139,13 +2080,14 @@
                 return `
                     <article class="step-card ${activeAudioId === index ? 'active-audio' : ''}" id="overview-step-${index}">
                         <div class="step-card-header">
-                            <span class="step-badge">مرحله ${toPersianDigits(step.stepNumber)}</span>
+                            <span class="step-badge">${step.title || ('مرحله ' + toPersianDigits(step.stepNumber))}</span>
+                            ${step.audioUrl ? `
                             <button type="button" class="step-inline-audio-btn ${isThisStepPlaying ? 'playing' : ''}" data-step-index="${index}">
                                 ${isThisStepPlaying
                                     ? `<svg viewBox="0 0 24 24" style="width:15px;height:15px;"><rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/></svg><span>توقف صوت</span>`
-                                    : `<svg viewBox="0 0 24 24" style="width:15px;height:15px;"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg><span>پخش صوت (${toPersianDigits(step.duration)} ثانیه)</span>`
+                                    : `<svg viewBox="0 0 24 24" style="width:15px;height:15px;"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg><span>پخش راهنمای صوتی</span>`
                                 }
-                            </button>
+                            </button>` : ''}
                         </div>
                         <p class="step-text">${step.text}</p>
                     </article>
@@ -2160,47 +2102,42 @@
             });
         }
 
-        /* ==========================================================================
-           6. AUDIO PLAYBACK ENGINE (Supports Real MP3 + Interactive Timer Fallback)
-           ========================================================================== */
-        function toggleAudioTarget(targetId) {
-            if (activeAudioId === targetId) {
+        function toggleAudioTarget(targetIndex) {
+            if (activeAudioId === targetIndex) {
                 if (isPlaying) {
                     pauseAudio();
                 } else {
                     resumeAudio();
                 }
             } else {
-                startNewAudio(targetId);
+                startNewAudio(targetIndex);
             }
         }
 
-        function startNewAudio(targetId) {
+        function startNewAudio(targetIndex) {
             stopAudioInternal();
-            activeAudioId = targetId;
-            currentAudioTime = 0;
-
-            let targetUrl = '';
-            if (targetId === 'ingredients') {
-                currentAudioDuration = activeRecipe.ingredientsAudioDuration || 15;
-                targetUrl = activeRecipe.ingredientsAudioUrl;
-            } else {
-                const stepObj = activeRecipe.steps[targetId];
-                currentAudioDuration = stepObj.duration || 14;
-                targetUrl = stepObj.audioUrl;
+            const stepObj = activeRecipe.steps[targetIndex];
+            if (!stepObj || !stepObj.audioUrl) {
+                alert('برای این مرحله فایل صوتی ثبت نشده است.');
+                return;
             }
 
-            realAudioElement.src = targetUrl;
+            activeAudioId = targetIndex;
+            currentAudioTime = 0;
+            currentAudioDuration = 0;
+
+            realAudioElement.src = stepObj.audioUrl;
             realAudioElement.currentTime = 0;
 
             playFeedbackTone(580, 90);
             isPlaying = true;
 
-            realAudioElement.play().catch(() => {
-                // Demo fallback timer handles progress smoothly when MP3 is not yet uploaded
+            realAudioElement.play().catch(err => {
+                console.error('Audio play error:', err);
+                isPlaying = false;
+                syncAllAudioUI();
             });
 
-            startProgressInterval();
             syncAllAudioUI();
         }
 
@@ -2208,7 +2145,6 @@
             isPlaying = true;
             playFeedbackTone(640, 70);
             realAudioElement.play().catch(() => {});
-            startProgressInterval();
             syncAllAudioUI();
         }
 
@@ -2216,53 +2152,18 @@
             isPlaying = false;
             playFeedbackTone(420, 70);
             realAudioElement.pause();
-            clearInterval(audioTimerInterval);
             syncAllAudioUI();
         }
 
         function stopAudioInternal() {
             isPlaying = false;
-            clearInterval(audioTimerInterval);
             realAudioElement.pause();
         }
 
-        function startProgressInterval() {
-            clearInterval(audioTimerInterval);
-            audioTimerInterval = setInterval(() => {
-                if (!isPlaying) return;
-                currentAudioTime += 0.25;
-
-                if (currentAudioTime >= currentAudioDuration) {
-                    currentAudioTime = currentAudioDuration;
-                    isPlaying = false;
-                    clearInterval(audioTimerInterval);
-                    playFeedbackTone(760, 120);
-
-                    setTimeout(() => {
-                        currentAudioTime = 0;
-                        syncAllAudioUI();
-                    }, 400);
-                }
-                syncAllAudioUI();
-            }, 250);
-        }
-
         function syncAllAudioUI() {
-            // 1. Update Full Ingredients Audio Button
-            const ingBtn = document.getElementById('playIngredientsBtn');
-            const ingText = document.getElementById('playIngredientsText');
-            if (activeAudioId === 'ingredients' && isPlaying) {
-                ingBtn.classList.add('playing');
-                ingText.textContent = `در حال پخش (${formatTime(currentAudioDuration - currentAudioTime)})`;
-            } else {
-                ingBtn.classList.remove('playing');
-                ingText.textContent = 'شنیدن مواد لازم';
-            }
-
-            // 2. Update Overview Vertical Steps Cards
+            if (!activeRecipe) return;
             renderVerticalSteps();
 
-            // 3. Update Cook Mode Bottom Audio Player
             const statusLabel = document.getElementById('playerStatusLabel');
             const timeDisplay = document.getElementById('playerTimeDisplay');
             const scrubber = document.getElementById('audioScrubber');
@@ -2271,12 +2172,8 @@
             const stepObj = activeRecipe.steps[currentCookStepIndex];
             if (!stepObj) return;
 
-            const displayedDuration = (activeAudioId === currentCookStepIndex)
-                ? currentAudioDuration
-                : stepObj.duration;
-            const displayedTime = (activeAudioId === currentCookStepIndex)
-                ? currentAudioTime
-                : 0;
+            const displayedDuration = (activeAudioId === currentCookStepIndex) ? currentAudioDuration : 0;
+            const displayedTime = (activeAudioId === currentCookStepIndex) ? currentAudioTime : 0;
 
             timeDisplay.textContent = `${formatTime(displayedTime)} / ${formatTime(displayedDuration)}`;
 
@@ -2292,9 +2189,6 @@
             }
         }
 
-        /* ==========================================================================
-           7. COOK MODE (STORY SEGMENTS, SWIPE CARDS & BOTTOM PLAYER)
-           ========================================================================== */
         function renderStorySegments() {
             const container = document.getElementById('storySegments');
             container.innerHTML = activeRecipe.steps.map((_, idx) => {
@@ -2317,6 +2211,7 @@
         }
 
         function updateCookModeSlide() {
+            if (!activeRecipe || !activeRecipe.steps.length) return;
             const step = activeRecipe.steps[currentCookStepIndex];
             const total = activeRecipe.steps.length;
 
@@ -2375,9 +2270,6 @@
             document.body.style.overflow = '';
         }
 
-        /* ==========================================================================
-           8. TOUCH SWIPE GESTURES FOR COOK MODE CARD (LTR Standard)
-           ========================================================================== */
         function setupTouchSwipe() {
             const stage = document.getElementById('cookCardStage');
             let touchStartX = 0;
@@ -2390,8 +2282,6 @@
             stage.addEventListener('touchend', e => {
                 touchEndX = e.changedTouches[0].screenX;
                 const diffX = touchEndX - touchStartX;
-
-                // Standard LTR swipe behavior: swipe right-to-left (diffX < 0) goes to next step
                 if (Math.abs(diffX) > 50) {
                     if (diffX < 0) {
                         goToCookStep(currentCookStepIndex + 1, isPlaying);
@@ -2402,9 +2292,6 @@
             }, { passive: true });
         }
 
-        /* ==========================================================================
-           9. DARK MODE & SCREEN WAKE LOCK API
-           ========================================================================== */
         function initTheme() {
             const savedTheme = localStorage.getItem('recipe_theme') || 'light';
             applyTheme(savedTheme);
@@ -2484,26 +2371,24 @@
             }
         }
 
-        /* ==========================================================================
-           10. INITIALIZATION & EVENT LISTENERS BINDING
-           ========================================================================== */
-        window.addEventListener('DOMContentLoaded', () => {
+        function initApp() {
+            normalizedRecipes = recipesData.map(normalizeRecipe);
+            activeRecipe = normalizedRecipes[0] || null;
             initTheme();
             renderHomeCategories();
             renderHomeRecipes();
             setupTouchSwipe();
+        }
 
-            // Search input real-time filtering
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp(); if(window.__INITIAL_RECIPE_ID__) { openRecipe(window.__INITIAL_RECIPE_ID__, false); }
+
             const searchInput = document.getElementById('searchInput');
             const clearSearchBtn = document.getElementById('clearSearchBtn');
 
             searchInput.addEventListener('input', e => {
                 searchQuery = e.target.value;
-                if (searchQuery.trim().length > 0) {
-                    clearSearchBtn.classList.remove('hidden');
-                } else {
-                    clearSearchBtn.classList.add('hidden');
-                }
+                clearSearchBtn.classList.toggle('hidden', searchQuery.trim().length === 0);
                 renderHomeRecipes();
             });
 
@@ -2515,7 +2400,6 @@
                 renderHomeRecipes();
             });
 
-            // Saved Bookmarks Filter Button in Home Header
             const bookmarksFilterBtn = document.getElementById('bookmarksFilterBtn');
             bookmarksFilterBtn.addEventListener('click', () => {
                 onlySavedFilter = !onlySavedFilter;
@@ -2523,20 +2407,14 @@
                 renderHomeRecipes();
             });
 
-            // Back to Home button in Detail Header
             document.getElementById('backToHomeBtn').addEventListener('click', backToHomeView);
 
-            // Bookmark button inside Detail View Hero
             document.getElementById('detailBookmarkBtn').addEventListener('click', () => {
-                if (activeRecipe) {
-                    toggleBookmark(activeRecipe.id);
-                }
+                if (activeRecipe) toggleBookmark(activeRecipe.id);
             });
 
-            // Wake Lock button
             document.getElementById('wakeLockBtn').addEventListener('click', toggleWakeLock);
 
-            // Servings calculator buttons (- on left, + on right)
             document.getElementById('decreaseServingsBtn').addEventListener('click', () => {
                 if (currentServings > 1) {
                     currentServings--;
@@ -2551,16 +2429,9 @@
                 }
             });
 
-            // Play Full Ingredients Audio
-            document.getElementById('playIngredientsBtn').addEventListener('click', () => {
-                toggleAudioTarget('ingredients');
-            });
-
-            // Open / Close Cook Mode
             document.getElementById('openCookModeBtn').addEventListener('click', openCookMode);
             document.getElementById('closeCookModeBtn').addEventListener('click', closeCookMode);
 
-            // Cook Mode Step Navigation Buttons
             document.getElementById('playerPrevBtn').addEventListener('click', () => {
                 goToCookStep(currentCookStepIndex - 1, true);
             });
@@ -2575,26 +2446,17 @@
                 goToCookStep(currentCookStepIndex + 1, isPlaying);
             });
 
-            // Cook Mode Main Play/Pause Button
             document.getElementById('playerPlayPauseBtn').addEventListener('click', () => {
                 toggleAudioTarget(currentCookStepIndex);
             });
 
-            // Scrubber Seek Bar
             document.getElementById('audioScrubber').addEventListener('input', e => {
                 const pct = Number(e.target.value);
-                if (activeAudioId !== currentCookStepIndex) {
-                    activeAudioId = currentCookStepIndex;
-                    currentAudioDuration = activeRecipe.steps[currentCookStepIndex].duration;
+                if (realAudioElement.duration && isFinite(realAudioElement.duration)) {
+                    realAudioElement.currentTime = (pct / 100) * realAudioElement.duration;
                 }
-                currentAudioTime = (pct / 100) * currentAudioDuration;
-                if (realAudioElement.duration) {
-                    realAudioElement.currentTime = currentAudioTime;
-                }
-                syncAllAudioUI();
             });
 
-            // Ingredients Quick Drawer inside Cook Mode
             const drawerBackdrop = document.getElementById('ingredientsDrawerBackdrop');
             document.getElementById('openDrawerBtn').addEventListener('click', () => {
                 drawerBackdrop.classList.add('open');
