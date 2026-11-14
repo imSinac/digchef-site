@@ -14,6 +14,27 @@ const dynamicCategories = [
 ];
 const recipesData = [
   {
+    "id": 2,
+    "slug": "test",
+    "title": "تست",
+    "category": "cake",
+    "catName": "کیک",
+    "time": "۶۰ دقیقه",
+    "difficulty": "متوسط",
+    "calories": "۵۰۰ کالری",
+    "defaultServings": 4,
+    "featured": false,
+    "image": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/test.webp",
+    "ingredients": [],
+    "steps": [
+      {
+        "title": "یک",
+        "text": "تست متن رندوم",
+        "audio": ""
+      }
+    ]
+  },
+  {
     "id": 1,
     "slug": "cake-yazdi",
     "title": "کیک یزدی",
