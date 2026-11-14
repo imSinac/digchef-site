@@ -4,24 +4,8 @@ const dynamicCategories = [
     "title": "همه"
   },
   {
-    "id": "polo",
-    "title": "چلو و پلو"
-  },
-  {
-    "id": "khoresht",
-    "title": "خورشت"
-  },
-  {
-    "id": "kebab",
-    "title": "کباب و گریل"
-  },
-  {
-    "id": "pasta",
-    "title": "فرنگی و پاستا"
-  },
-  {
-    "id": "soup",
-    "title": "سوپ و آش"
+    "id": "cake",
+    "title": "کیک"
   }
 ];
 const recipesData = [
