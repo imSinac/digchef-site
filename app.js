@@ -1,4 +1,4 @@
-const categoriesList = [
+const categoriesList = typeof dynamicCategories !== 'undefined' ? dynamicCategories : [
     { id: "همه", title: "همه" },
     { id: "polo", title: "چلو و پلو" },
     { id: "khoresht", title: "خورشت" },

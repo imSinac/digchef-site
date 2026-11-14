@@ -1,3 +1,29 @@
+const dynamicCategories = [
+  {
+    "id": "همه",
+    "title": "همه"
+  },
+  {
+    "id": "polo",
+    "title": "چلو و پلو"
+  },
+  {
+    "id": "khoresht",
+    "title": "خورشت"
+  },
+  {
+    "id": "kebab",
+    "title": "کباب و گریل"
+  },
+  {
+    "id": "pasta",
+    "title": "فرنگی و پاستا"
+  },
+  {
+    "id": "soup",
+    "title": "سوپ و آش"
+  }
+];
 const recipesData = [
   {
     "id": 1,
@@ -13,11 +39,13 @@ const recipesData = [
     "image": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/cake-yazdi.webp",
     "ingredients": [
       {
+        "id": 1,
         "name": "آرد",
-        "amount": 3,
+        "amount": 3.0,
         "unit": "پیمانه"
       },
       {
+        "id": 2,
         "name": "روغن مایع",
         "amount": 0.75,
         "unit": "پیمانه"
