@@ -1,0 +1,2613 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>آشپزخونه | دستیار هوشمند آشپزی</title>
+    <!-- Load Vazirmatn Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           CSS Variables & Theme Definitions
+           ========================================================================== */
+        :root {
+            --bg-main: #FAF7F2;
+            --bg-surface: #FFFFFF;
+            --bg-subtle: #F3EFE6;
+            --text-primary: #1C1917;
+            --text-secondary: #57534E;
+            --text-muted: #A8A29E;
+            --accent: #EA580C;
+            --accent-hover: #C2410C;
+            --accent-soft: #FFEDD5;
+            --border-color: #E7E5E4;
+            --success: #16A34A;
+            --danger: #EF4444;
+            --shadow-sm: 0 2px 8px rgba(28, 25, 23, 0.05);
+            --shadow-md: 0 8px 24px rgba(28, 25, 23, 0.08);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #121212;
+            --bg-surface: #1E1E1E;
+            --bg-subtle: #2A2A2A;
+            --text-primary: #F5F5F4;
+            --text-secondary: #A8A29E;
+            --text-muted: #6B6661;
+            --accent: #F97316;
+            --accent-hover: #FB923C;
+            --accent-soft: rgba(249, 115, 22, 0.16);
+            --border-color: #2E2E2E;
+            --success: #22C55E;
+            --danger: #F87171;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
+        }
+
+        /* ==========================================================================
+           Base & Reset Styles (Mobile-Only Container)
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #E5E0D8;
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        [data-theme="dark"] body {
+            background-color: #080808;
+        }
+
+        /* Mobile viewport wrapper (max 480px) */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
+            transition: background-color var(--transition), color var(--transition);
+            overflow-x: hidden;
+        }
+
+        button, input {
+            font-family: inherit;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* View Transition Animation */
+        .view-page {
+            animation: fadeView 0.22s ease;
+        }
+
+        @keyframes fadeView {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           Top Navigation Header (Shared / Adaptive)
+           ========================================================================== */
+        .top-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color var(--transition), border-color var(--transition);
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logo-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            position: relative;
+            transition: all var(--transition);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.92);
+        }
+
+        .icon-btn.active-filter {
+            background-color: var(--accent-soft);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .bookmark-count-badge {
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            font-size: 0.68rem;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Back Button in Detail Header */
+        .back-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            transition: transform 0.15s ease;
+        }
+
+        .back-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Wake Lock Pill Button */
+        .wake-lock-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 11px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .wake-lock-btn.active {
+            background-color: var(--accent-soft);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .wake-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+            transition: background-color var(--transition);
+        }
+
+        .wake-lock-btn.active .wake-dot {
+            background-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        /* ==========================================================================
+           HOME VIEW: Search Bar, Category Pills, Chef Featured & Cards Grid
+           ========================================================================== */
+        .home-view-wrapper {
+            padding-bottom: 36px;
+        }
+
+        .search-section {
+            padding: 14px 16px 8px;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 4px 12px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color var(--transition);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent);
+        }
+
+        .search-icon {
+            color: var(--text-muted);
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 9px 0;
+            font-size: 0.92rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .clear-search-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: var(--bg-subtle);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Category Horizontal Scroll Pills */
+        .categories-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 16px 12px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .categories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-pill {
+            white-space: nowrap;
+            padding: 7px 16px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .category-pill.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.28);
+        }
+
+        /* Featured Chef Suggestion Card */
+        .featured-section {
+            padding: 6px 16px 16px;
+        }
+
+        .featured-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            height: 215px;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            background-color: var(--bg-subtle);
+        }
+
+        .featured-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .featured-card:active .featured-img {
+            transform: scale(1.03);
+        }
+
+        .featured-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 14, 13, 0.9) 12%, rgba(15, 14, 13, 0.25) 65%, rgba(15, 14, 13, 0.1));
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 14px 16px;
+            color: #FFFFFF;
+        }
+
+        .featured-top-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chef-badge {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 11px;
+            border-radius: var(--radius-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .audio-tag-pill {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            color: #FFFFFF;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .featured-info h2 {
+            font-size: 1.22rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.88);
+            font-weight: 500;
+        }
+
+        /* Home Recipes List Section */
+        .recipes-list-section {
+            padding: 4px 16px;
+        }
+
+        .list-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .list-count-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .recipe-cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .home-recipe-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .home-recipe-card:active {
+            transform: scale(0.985);
+        }
+
+        .card-thumb-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9.5;
+            background-color: var(--bg-subtle);
+            overflow: hidden;
+        }
+
+        .card-thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-bookmark-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #1C1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+            transition: transform 0.15s ease;
+        }
+
+        .card-bookmark-btn:active {
+            transform: scale(0.85);
+        }
+
+        .card-bookmark-btn.saved {
+            color: var(--danger);
+        }
+
+        .card-bookmark-btn.saved svg {
+            fill: var(--danger);
+        }
+
+        .card-audio-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(28, 25, 23, 0.78);
+            backdrop-filter: blur(4px);
+            color: #FFFFFF;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--bg-surface);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 0.74rem;
+            font-weight: 800;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-body {
+            padding: 13px 15px 15px;
+        }
+
+        .card-title {
+            font-size: 1.06rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .card-meta-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .meta-pill-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .meta-pill-inline svg {
+            width: 15px;
+            height: 15px;
+            color: var(--accent);
+        }
+
+        /* Empty Search / Bookmark State */
+        .empty-state-box {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--bg-surface);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-top: 8px;
+        }
+
+        .empty-state-box svg {
+            width: 44px;
+            height: 44px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .empty-state-title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .empty-state-sub {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .reset-filter-btn {
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+        }
+
+        /* ==========================================================================
+           RECIPE DETAIL VIEW STYLES
+           ========================================================================== */
+        .detail-view-wrapper {
+            padding-bottom: 96px;
+        }
+
+        .hero-section {
+            padding: 16px;
+        }
+
+        .dish-image-wrapper {
+            width: 100%;
+            height: 245px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            background-color: var(--bg-subtle);
+            margin-bottom: 16px;
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--bg-surface);
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.78rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .detail-bookmark-fab {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.92);
+            color: #1C1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .detail-bookmark-fab.saved {
+            color: var(--danger);
+        }
+
+        .detail-bookmark-fab.saved svg {
+            fill: var(--danger);
+        }
+
+        .recipe-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1.35;
+            margin-bottom: 6px;
+        }
+
+        .recipe-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background-color: var(--bg-surface);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .meta-item:last-child {
+            border-left: none;
+        }
+
+        .meta-label {
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .meta-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Section Shared Styles */
+        .content-section {
+            padding: 8px 16px 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 1.12rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background-color: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Servings Calculator & Ingredients */
+        .servings-bar {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .servings-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Strictly LTR controls: - on left, + on right */
+        .servings-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            direction: ltr;
+        }
+
+        .qty-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease;
+        }
+
+        .qty-btn:active {
+            transform: scale(0.9);
+        }
+
+        .servings-count {
+            font-size: 1rem;
+            font-weight: 800;
+            min-width: 52px;
+            text-align: center;
+            direction: rtl;
+        }
+
+        .audio-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all var(--transition);
+        }
+
+        .audio-pill-btn.playing {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .ingredients-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ingredient-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s ease;
+        }
+
+        .ingredient-row:last-child {
+            border-bottom: none;
+        }
+
+        .ingredient-row:active {
+            background-color: var(--bg-subtle);
+        }
+
+        .ing-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .custom-checkbox svg {
+            width: 14px;
+            height: 14px;
+            stroke: #FFFFFF;
+            stroke-width: 3;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.2s ease;
+        }
+
+        .ingredient-row.checked .custom-checkbox {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .ingredient-row.checked .custom-checkbox svg {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .ing-name {
+            font-size: 0.94rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .ing-amount {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--accent);
+            transition: opacity 0.2s ease;
+        }
+
+        .ingredient-row.checked .ing-name {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .ingredient-row.checked .ing-amount {
+            opacity: 0.45;
+        }
+
+        /* Vertical Steps List */
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .step-card.active-audio {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-soft);
+        }
+
+        .step-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: var(--accent);
+            background-color: var(--accent-soft);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+        }
+
+        .step-inline-audio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-subtle);
+            color: var(--text-primary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .step-inline-audio-btn.playing {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .step-text {
+            font-size: 0.96rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* Sticky Bottom Floating Action Bar (Enter Cook Mode) */
+        .bottom-cta-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            padding: 12px 16px 16px;
+            background: linear-gradient(to top, var(--bg-main) 80%, rgba(250, 247, 242, 0));
+            z-index: 25;
+        }
+
+        [data-theme="dark"] .bottom-cta-bar {
+            background: linear-gradient(to top, var(--bg-main) 80%, rgba(18, 18, 18, 0));
+        }
+
+        .start-cook-btn {
+            width: 100%;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            padding: 15px 20px;
+            border-radius: var(--radius-lg);
+            font-size: 1.02rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.35);
+            transition: transform 0.15s ease;
+        }
+
+        .start-cook-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* ==========================================================================
+           COOK MODE (Full-Screen Solid Background Story View + Bottom Audio Player)
+           ========================================================================== */
+        .cook-mode-overlay {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 480px;
+            height: 100dvh;
+            background-color: var(--bg-main);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.28s ease, transform 0.28s ease, background-color var(--transition);
+        }
+
+        .cook-mode-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Story Segmented Progress Bar (Strictly LTR) */
+        .cook-top-bar {
+            padding: 14px 16px 8px;
+            background-color: var(--bg-main);
+        }
+
+        .story-segments {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            direction: ltr;
+        }
+
+        .story-segment {
+            flex: 1;
+            height: 5px;
+            background-color: var(--border-color);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .story-segment-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent);
+            border-radius: var(--radius-full);
+            transition: width 0.25s ease;
+        }
+
+        .story-segment.completed .story-segment-fill,
+        .story-segment.current .story-segment-fill {
+            width: 100%;
+        }
+
+        /* Header inside Cook Mode: Right side has Close (X) + Ingredients, Left side has Step Counter */
+        .cook-header-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cook-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-cook-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
+
+        .peek-ingredients-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 13px;
+            border-radius: var(--radius-full);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cook-step-counter {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        /* Middle Swipeable Card Area */
+        .cook-card-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 14px 20px;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .cook-step-card {
+            background-color: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            padding: 26px 22px;
+            min-height: 310px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.25s ease, opacity 0.25s ease, background-color var(--transition);
+        }
+
+        .cook-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .cook-card-title {
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .cook-instruction-text {
+            font-size: 1.28rem;
+            font-weight: 600;
+            line-height: 1.85;
+            color: var(--text-primary);
+            margin: auto 0;
+        }
+
+        /* Strictly LTR Prev/Next bar below card */
+        .swipe-hint-bar {
+            margin-top: 22px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            direction: ltr;
+        }
+
+        .nav-step-inline-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .nav-step-inline-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Sticky Bottom Audio Player Deck (Cook Mode) */
+        .cook-audio-player {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 20px 24px;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .player-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .time-display {
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
+        }
+
+        .scrubber-container {
+            width: 100%;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .audio-scrubber {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-full);
+            outline: none;
+            cursor: pointer;
+            direction: ltr;
+        }
+
+        .audio-scrubber::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(234, 88, 12, 0.4);
+        }
+
+        /* Strictly LTR Player Controls: Prev on Left, Next on Right */
+        .player-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            direction: ltr;
+        }
+
+        .player-nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            transition: background-color 0.15s ease, opacity 0.15s ease;
+        }
+
+        .player-nav-btn:active {
+            background-color: var(--bg-subtle);
+        }
+
+        .player-nav-btn:disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .player-main-play-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
+            transition: transform 0.15s ease;
+        }
+
+        .player-main-play-btn:active {
+            transform: scale(0.92);
+        }
+
+        .player-main-play-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* Quick Ingredients Drawer inside Cook Mode */
+        .ingredients-drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 120;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .ingredients-drawer-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ingredients-drawer {
+            width: 100%;
+            max-width: 480px;
+            max-height: 75vh;
+            background-color: var(--bg-surface);
+            border-radius: 24px 24px 0 0;
+            padding: 20px 16px 28px;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ingredients-drawer-backdrop.open .ingredients-drawer {
+            transform: translateY(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .drawer-title {
+            font-size: 1.02rem;
+            font-weight: 800;
+        }
+    </style>
+
+    <title>کیک یزدی - طرز تهیه قدم به قدم و صوتی</title>
+    <meta name="description" content="طرز تهیه کیک یزدی به صورت مرحله به مرحله همراه با راهنمای صوتی و محاسبه هوشمند مواد اولیه.">
+    <meta property="og:title" content="کیک یزدی">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/cake-yazdi.webp">
+    <link rel="canonical" href="https://example.com/recipes/cake-yazdi/">
+    <script type="application/ld+json">{"@context": "https://schema.org/", "@type": "Recipe", "name": "کیک یزدی", "image": ["https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/cake-yazdi.webp"], "recipeCategory": "چلو و پلو", "recipeYield": "4 نفر", "recipeIngredient": ["2 پیمانه آرد", "0.75 پیمانه روغن مایع"], "recipeInstructions": [{"@type": "HowToStep", "name": "آماده‌سازی اولیه", "text": "نیم ساعت قبل از اینکه دست‌به‌کار بشی، همه مواد رو از یخچال بیار بیرون تا هم‌دمای محیط بشن. فِر رو هم روی ۲۱۰ درجه روشن کن تا حسابی گرم بشه."}]}</script>
+    <script>window.__INITIAL_RECIPE_ID__ = 1;</script>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ======================================================================
+             VIEW 1: HOME VIEW (Search, Categories, Featured, Recipe Cards)
+             ====================================================================== -->
+        <div id="homeView" class="view-page home-view-wrapper">
+            <header class="top-navbar">
+                <div class="brand-title">
+                    <div class="brand-logo-box">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-1v4a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-4H7a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3h1V6a4 4 0 0 1 4-4z"/>
+                        </svg>
+                    </div>
+                    <span>آشپزخونه صوتی</span>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Saved Bookmarks Filter Toggle -->
+                    <button type="button" id="bookmarksFilterBtn" class="icon-btn" aria-label="علاقه‌مندی‌ها" title="نمایش دستورهای ذخیره شده">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span id="bookmarkCountBadge" class="bookmark-count-badge hidden">۰</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button type="button" id="homeThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
+                        <svg class="theme-icon-svg" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Real-time Search Box (Title or Ingredient) -->
+            <div class="search-section">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="جستجوی نام غذا یا مواد اولیه (مثلاً: مرغ، قارچ)...">
+                    <button type="button" id="clearSearchBtn" class="clear-search-btn hidden" aria-label="پاک کردن جستجو">
+                        <svg viewBox="0 0 24 24" style="width:15px;height:15px;">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Horizontal Category Pills -->
+            <div id="categoryPillsContainer" class="categories-scroll"></div>
+
+            <!-- Chef Daily Suggestion Hero Card (Hidden when filtering/searching) -->
+            <section id="featuredSection" class="featured-section">
+                <div id="featuredCardContainer"></div>
+            </section>
+
+            <!-- Recipe Cards List -->
+            <section class="recipes-list-section">
+                <div class="list-header-row">
+                    <h2 id="listSectionTitle" class="section-title">دستور پخت‌های محبوب</h2>
+                    <span id="recipesCountLabel" class="list-count-text">۵ دستور</span>
+                </div>
+
+                <div id="recipesGrid" class="recipe-cards-grid"></div>
+            </section>
+        </div>
+
+        <!-- ======================================================================
+             VIEW 2: RECIPE DETAIL VIEW (Vertical Overview + Fullscreen Cook Mode)
+             ====================================================================== -->
+        <div id="detailView" class="view-page detail-view-wrapper hidden">
+            <!-- Detail Top Navbar -->
+            <header class="top-navbar">
+                <button type="button" id="backToHomeBtn" class="back-nav-btn">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                    <span>صفحه اصلی</span>
+                </button>
+
+                <div class="nav-actions">
+                    <!-- Screen Wake Lock Button -->
+                    <button type="button" id="wakeLockBtn" class="wake-lock-btn" title="جلوگیری از خاموش شدن صفحه موبایل">
+                        <span class="wake-dot"></span>
+                        <span id="wakeLockText">روشن ماندن صفحه</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle Button -->
+                    <button type="button" id="detailThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
+                        <svg class="theme-icon-svg" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Section: Dish Image & Overview Meta -->
+            <section class="hero-section">
+                <div class="dish-image-wrapper">
+                    <img id="dishImage" class="dish-image" src="" alt="تصویر غذا" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Food+Photo'">
+                    <span id="difficultyBadge" class="difficulty-badge"></span>
+                    <button type="button" id="detailBookmarkBtn" class="detail-bookmark-fab" aria-label="ذخیره دستور">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <h1 id="recipeTitle" class="recipe-title"></h1>
+                <p id="recipeSubtitle" class="recipe-subtitle"></p>
+
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">آماده‌سازی</span>
+                        <span id="prepTime" class="meta-value"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">زمان پخت</span>
+                        <span id="cookTime" class="meta-value"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">تعداد مراحل</span>
+                        <span id="totalStepsMeta" class="meta-value"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ingredients Section with Dynamic Servings Calculator -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">مواد لازم</h2>
+                    <button type="button" id="playIngredientsBtn" class="audio-pill-btn">
+                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+                        </svg>
+                        <span id="playIngredientsText">شنیدن مواد لازم</span>
+                    </button>
+                </div>
+
+                <!-- Servings Multiplier Bar (LTR controls: - on left, + on right) -->
+                <div class="servings-bar">
+                    <span class="servings-label">تعداد نفرات:</span>
+                    <div class="servings-controls">
+                        <button type="button" id="decreaseServingsBtn" class="qty-btn" aria-label="کاهش نفرات">−</button>
+                        <span id="servingsDisplay" class="servings-count">۴ نفر</span>
+                        <button type="button" id="increaseServingsBtn" class="qty-btn" aria-label="افزایش نفرات">+</button>
+                    </div>
+                </div>
+
+                <!-- Checkable Ingredients List -->
+                <div id="ingredientsList" class="ingredients-card"></div>
+            </section>
+
+            <!-- Step-by-Step Instructions Section (Vertical Overview) -->
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">مراحل پخت قدم به قدم</h2>
+                </div>
+                <div id="stepsVerticalList" class="steps-list"></div>
+            </section>
+
+            <!-- Sticky Bottom Button to Launch Full-Screen Cook Mode -->
+            <div class="bottom-cta-bar">
+                <button type="button" id="openCookModeBtn" class="start-cook-btn">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+                    </svg>
+                    <span>شروع حالت آشپزی (مرحله به مرحله)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ======================================================================
+             FULL-SCREEN COOK MODE OVERLAY (Horizontal Card Slider + Bottom Player)
+             ====================================================================== -->
+        <div id="cookModeOverlay" class="cook-mode-overlay" aria-hidden="true">
+            <!-- Top Segmented Progress & Controls -->
+            <div class="cook-top-bar">
+                <!-- Strictly LTR Story Progress Bar -->
+                <div id="storySegments" class="story-segments"></div>
+
+                <div class="cook-header-controls">
+                    <!-- Action buttons on the right: X button at far right, Ingredients button to its left -->
+                    <div class="cook-header-right">
+                        <button type="button" id="closeCookModeBtn" class="close-cook-btn" aria-label="بستن حالت آشپزی">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+
+                        <button type="button" id="openDrawerBtn" class="peek-ingredients-btn">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                            <span>مواد لازم</span>
+                        </button>
+                    </div>
+
+                    <!-- Step counter on the left -->
+                    <span id="cookStepCounter" class="cook-step-counter">مرحله ۱ از ۶</span>
+                </div>
+            </div>
+
+            <!-- Swipeable Step Card Stage -->
+            <div id="cookCardStage" class="cook-card-stage">
+                <div id="cookStepCard" class="cook-step-card">
+                    <div>
+                        <div class="cook-card-top">
+                            <span id="cookCardTitle" class="cook-card-title">مرحله اول</span>
+                        </div>
+                        <p id="cookInstructionText" class="cook-instruction-text"></p>
+                    </div>
+
+                    <!-- Strictly LTR Prev/Next buttons below card -->
+                    <div class="swipe-hint-bar">
+                        <button type="button" id="cardPrevBtn" class="nav-step-inline-btn">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <polyline points="15 18 9 12 15 6"/>
+                            </svg>
+                            <span>مرحله قبل</span>
+                        </button>
+                        <span>ورق بزنید (سوایپ)</span>
+                        <button type="button" id="cardNextBtn" class="nav-step-inline-btn">
+                            <span>مرحله بعد</span>
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Bottom Audio Player -->
+            <div class="cook-audio-player">
+                <div class="player-status-row">
+                    <span id="playerStatusLabel">آماده پخش صوت مرحله</span>
+                    <span id="playerTimeDisplay" class="time-display">۰۰:۰۰ / ۰۰:۱۲</span>
+                </div>
+
+                <div class="scrubber-container">
+                    <input type="range" id="audioScrubber" class="audio-scrubber" min="0" max="100" value="0">
+                </div>
+
+                <!-- Strictly LTR Player Controls: Prev on Left, Next on Right -->
+                <div class="player-controls-row">
+                    <button type="button" id="playerPrevBtn" class="player-nav-btn">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="19 20 9 12 19 4 19 20"/>
+                            <line x1="5" y1="19" x2="5" y2="5"/>
+                        </svg>
+                        <span>قبلی</span>
+                    </button>
+
+                    <button type="button" id="playerPlayPauseBtn" class="player-main-play-btn" aria-label="پخش یا توقف">
+                        <svg id="playerPlayIcon" viewBox="0 0 24 24">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </button>
+
+                    <button type="button" id="playerNextBtn" class="player-nav-btn">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="5 4 15 12 5 20 5 4"/>
+                            <line x1="19" y1="5" x2="19" y2="19"/>
+                        </svg>
+                        <span>بعدی</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Ingredients Modal Drawer inside Cook Mode -->
+        <div id="ingredientsDrawerBackdrop" class="ingredients-drawer-backdrop">
+            <div class="ingredients-drawer">
+                <div class="drawer-header">
+                    <span class="drawer-title">چک‌لیست مواد لازم (<span id="drawerServingsCount">۴</span> نفر)</span>
+                    <button type="button" id="closeDrawerBtn" class="close-cook-btn" style="width:32px;height:32px;">
+                        <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="drawerIngredientsList" class="ingredients-card"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. STATIC RECIPES DATABASE (Ready to be generated by Python SQLite Script)
+           ========================================================================== */
+        const categoriesList = [
+            "همه",
+            "چلو و پلو",
+            "خورشت",
+            "کباب و گریل",
+            "فرنگی و پاستا",
+            "سوپ و آش"
+        ];
+
+        const recipesData = [
+  {
+    "id": 1,
+    "slug": "cake-yazdi",
+    "title": "کیک یزدی",
+    "category": "polo",
+    "catName": "چلو و پلو",
+    "time": "۶۰ دقیقه",
+    "difficulty": "متوسط",
+    "calories": "۵۰۰ کالری",
+    "defaultServings": 4,
+    "featured": true,
+    "image": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/cake-yazdi.webp",
+    "ingredients": [
+      {
+        "name": "آرد",
+        "amount": 2,
+        "unit": "پیمانه"
+      },
+      {
+        "name": "روغن مایع",
+        "amount": 0.75,
+        "unit": "پیمانه"
+      }
+    ],
+    "steps": [
+      {
+        "title": "آماده‌سازی اولیه",
+        "text": "نیم ساعت قبل از اینکه دست‌به‌کار بشی، همه مواد رو از یخچال بیار بیرون تا هم‌دمای محیط بشن. فِر رو هم روی ۲۱۰ درجه روشن کن تا حسابی گرم بشه.",
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/audio/cake-yazdi-step-1.wav"
+      }
+    ]
+  }
+];
+
+        /* ==========================================================================
+           2. APPLICATION STATE & HELPERS
+           ========================================================================== */
+        let currentView = 'home'; // 'home' | 'detail'
+        let selectedCategory = 'همه';
+        let searchQuery = '';
+        let onlySavedFilter = false;
+        let savedRecipeIds = new Set(JSON.parse(localStorage.getItem('saved_recipes') || '[]'));
+
+        // Current Active Recipe in Detail View
+        let activeRecipe = recipesData[0];
+        let currentServings = activeRecipe.defaultServings;
+        const checkedIngredients = new Set();
+        let currentCookStepIndex = 0;
+        let isCookModeOpen = false;
+
+        // Audio Playback Engine (Real HTMLAudioElement + Simulated Fallback Timer)
+        let activeAudioId = null; // 'ingredients' or stepIndex (0, 1, 2...)
+        let isPlaying = false;
+        let currentAudioTime = 0;
+        let currentAudioDuration = 12;
+        let audioTimerInterval = null;
+        let realAudioElement = new Audio();
+        let audioCtx = null;
+
+        // Convert English numbers to Persian digits
+        function toPersianDigits(num) {
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // Format clean ingredient numbers
+        function formatQuantity(val) {
+            const rounded = Math.round(val * 100) / 100;
+            return toPersianDigits(rounded).replace('.', '٫');
+        }
+
+        // Format seconds into MM:SS in Persian digits
+        function formatTime(seconds) {
+            const sec = Math.max(0, Math.floor(seconds));
+            const m = String(Math.floor(sec / 60)).padStart(2, '0');
+            const s = String(sec % 60).padStart(2, '0');
+            return `${toPersianDigits(m)}:${toPersianDigits(s)}`;
+        }
+
+        // Subtle synthesized chime when starting/changing audio
+        function playFeedbackTone(freq = 520, durationMs = 90) {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContextClass();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + durationMs / 1000);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + durationMs / 1000);
+            } catch (e) {
+                // Ignore Web Audio errors if blocked
+            }
+        }
+
+        /* ==========================================================================
+           3. HOME VIEW RENDERING & FILTERING
+           ========================================================================== */
+        function renderHomeCategories() {
+            const container = document.getElementById('categoryPillsContainer');
+            container.innerHTML = categoriesList.map(cat => `
+                <button type="button" class="category-pill ${selectedCategory === cat ? 'active' : ''}" data-cat="${cat}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            container.querySelectorAll('.category-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedCategory = btn.getAttribute('data-cat');
+                    renderHomeCategories();
+                    renderHomeRecipes();
+                });
+            });
+        }
+
+        function renderFeaturedSuggestion() {
+            const section = document.getElementById('featuredSection');
+            const container = document.getElementById('featuredCardContainer');
+
+            // Hide featured card when user is searching, filtering by category, or viewing saved items
+            if (searchQuery.trim() !== '' || selectedCategory !== 'همه' || onlySavedFilter) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            const featuredRecipe = recipesData.find(r => r.isFeatured) || recipesData[0];
+            section.classList.remove('hidden');
+
+            container.innerHTML = `
+                <div class="featured-card" data-open-recipe="${featuredRecipe.id}">
+                    <img class="featured-img" src="${featuredRecipe.image}" alt="${featuredRecipe.title}" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Chef+Choice'">
+                    <div class="featured-gradient">
+                        <div class="featured-top-badges">
+                            <span class="chef-badge">
+                                <svg viewBox="0 0 24 24" style="width:14px;height:14px;">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor"/>
+                                </svg>
+                                پیشنهاد سرآشپز
+                            </span>
+                            <span class="audio-tag-pill">
+                                <svg viewBox="0 0 24 24" style="width:14px;height:14px;">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                                </svg>
+                                گام‌به‌گام صوتی
+                            </span>
+                        </div>
+                        <div class="featured-info">
+                            <h2>${featuredRecipe.title}</h2>
+                            <div class="featured-meta">
+                                <span>⏱ پخت: ${featuredRecipe.cookTime}</span>
+                                <span>•</span>
+                                <span>🔥 سختی: ${featuredRecipe.difficulty}</span>
+                                <span>•</span>
+                                <span>🎙 ${toPersianDigits(featuredRecipe.steps.length)} مرحله صوتی</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.querySelector('.featured-card').addEventListener('click', () => {
+                openRecipeDetail(featuredRecipe.id);
+            });
+        }
+
+        function renderHomeRecipes() {
+            renderFeaturedSuggestion();
+            updateBookmarkBadgeUI();
+
+            const grid = document.getElementById('recipesGrid');
+            const titleEl = document.getElementById('listSectionTitle');
+            const countEl = document.getElementById('recipesCountLabel');
+
+            const normalizedQuery = searchQuery.trim().toLowerCase();
+
+            const filtered = recipesData.filter(recipe => {
+                // 1. Saved Bookmarks filter
+                if (onlySavedFilter && !savedRecipeIds.has(recipe.id)) {
+                    return false;
+                }
+                // 2. Category filter
+                if (selectedCategory !== 'همه' && recipe.category !== selectedCategory) {
+                    return false;
+                }
+                // 3. Search query filter (checks Title, Subtitle, or Ingredients names)
+                if (normalizedQuery !== '') {
+                    const inTitle = recipe.title.toLowerCase().includes(normalizedQuery);
+                    const inSub = recipe.subtitle.toLowerCase().includes(normalizedQuery);
+                    const inIng = recipe.ingredients.some(i => i.name.toLowerCase().includes(normalizedQuery));
+                    return inTitle || inSub || inIng;
+                }
+                return true;
+            });
+
+            // Update section title based on active filter
+            if (onlySavedFilter) {
+                titleEl.textContent = 'دستورهای ذخیره شده شما';
+            } else if (normalizedQuery !== '') {
+                titleEl.textContent = `نتایج جستجو برای «${searchQuery}»`;
+            } else if (selectedCategory !== 'همه') {
+                titleEl.textContent = `دسته‌بندی: ${selectedCategory}`;
+            } else {
+                titleEl.textContent = 'همه دستور پخت‌ها';
+            }
+
+            countEl.textContent = `${toPersianDigits(filtered.length)} دستور`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state-box">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <div class="empty-state-title">دستور پختی پیدا نشد!</div>
+                        <p class="empty-state-sub">لطفاً عبارت دیگری جستجو کنید یا فیلترها را پاک کنید.</p>
+                        <button type="button" id="resetFiltersBtn" class="reset-filter-btn">نمایش همه دستور پخت‌ها</button>
+                    </div>
+                `;
+                document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+                    searchQuery = '';
+                    selectedCategory = 'همه';
+                    onlySavedFilter = false;
+                    document.getElementById('searchInput').value = '';
+                    document.getElementById('clearSearchBtn').classList.add('hidden');
+                    document.getElementById('bookmarksFilterBtn').classList.remove('active-filter');
+                    renderHomeCategories();
+                    renderHomeRecipes();
+                });
+                return;
+            }
+
+            grid.innerHTML = filtered.map(recipe => {
+                const isSaved = savedRecipeIds.has(recipe.id);
+                return `
+                    <article class="home-recipe-card" data-recipe-id="${recipe.id}">
+                        <div class="card-thumb-wrapper">
+                            <img class="card-thumb-img" src="${recipe.image}" alt="${recipe.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Food+Photo'">
+                            <span class="card-category-badge">${recipe.category}</span>
+
+                            <button type="button" class="card-bookmark-btn ${isSaved ? 'saved' : ''}" data-bookmark-id="${recipe.id}" aria-label="افزودن به علاقه‌مندی‌ها">
+                                <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+
+                            <span class="card-audio-badge">
+                                <svg viewBox="0 0 24 24" style="width:14px;height:14px;">
+                                    <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+                                </svg>
+                                راهنمای صوتی (${toPersianDigits(recipe.steps.length)} گام)
+                            </span>
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="card-title">${recipe.title}</h3>
+                            <p class="card-subtitle">${recipe.subtitle}</p>
+
+                            <div class="card-footer-meta">
+                                <div class="card-meta-group">
+                                    <span class="meta-pill-inline">
+                                        <svg viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="12 6 12 12 16 14"/>
+                                        </svg>
+                                        ${recipe.cookTime}
+                                    </span>
+                                    <span class="meta-pill-inline">
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M12 20V10"/>
+                                            <path d="M18 20V4"/>
+                                            <path d="M6 20v-4"/>
+                                        </svg>
+                                        ${recipe.difficulty}
+                                    </span>
+                                </div>
+                                <span style="color:var(--accent);font-weight:800;">مشاهده دستور ←</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            // Bind card click to open detail view
+            grid.querySelectorAll('.home-recipe-card').forEach(card => {
+                card.addEventListener('click', e => {
+                    // Prevent opening card if user clicked the heart bookmark button
+                    if (e.target.closest('.card-bookmark-btn')) return;
+                    const id = card.getAttribute('data-recipe-id');
+                    openRecipeDetail(id);
+                });
+            });
+
+            // Bind bookmark toggle buttons on cards
+            grid.querySelectorAll('.card-bookmark-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-bookmark-id');
+                    toggleBookmark(id);
+                });
+            });
+        }
+
+        function toggleBookmark(recipeId) {
+            if (savedRecipeIds.has(recipeId)) {
+                savedRecipeIds.delete(recipeId);
+            } else {
+                savedRecipeIds.add(recipeId);
+                playFeedbackTone(640, 70);
+            }
+            localStorage.setItem('saved_recipes', JSON.stringify(Array.from(savedRecipeIds)));
+            renderHomeRecipes();
+            syncDetailBookmarkUI();
+        }
+
+        function updateBookmarkBadgeUI() {
+            const badge = document.getElementById('bookmarkCountBadge');
+            const count = savedRecipeIds.size;
+            if (count > 0) {
+                badge.textContent = toPersianDigits(count);
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function syncDetailBookmarkUI() {
+            const btn = document.getElementById('detailBookmarkBtn');
+            if (!btn || !activeRecipe) return;
+            if (savedRecipeIds.has(activeRecipe.id)) {
+                btn.classList.add('saved');
+            } else {
+                btn.classList.remove('saved');
+            }
+        }
+
+        /* ==========================================================================
+           4. NAVIGATION BETWEEN HOME VIEW & RECIPE DETAIL VIEW
+           ========================================================================== */
+        function openRecipeDetail(recipeId) {
+            const found = recipesData.find(r => r.id === recipeId);
+            if (!found) return;
+
+            stopAudioInternal();
+            activeAudioId = null;
+            activeRecipe = found;
+            currentServings = activeRecipe.defaultServings;
+            checkedIngredients.clear();
+            currentCookStepIndex = 0;
+
+            // Populate Detail View DOM
+            document.getElementById('dishImage').src = activeRecipe.image;
+            document.getElementById('difficultyBadge').textContent = `سختی: ${activeRecipe.difficulty}`;
+            document.getElementById('recipeTitle').textContent = activeRecipe.title;
+            document.getElementById('recipeSubtitle').textContent = activeRecipe.subtitle;
+            document.getElementById('prepTime').textContent = activeRecipe.prepTime;
+            document.getElementById('cookTime').textContent = activeRecipe.cookTime;
+            document.getElementById('totalStepsMeta').textContent = `${toPersianDigits(activeRecipe.steps.length)} مرحله`;
+
+            syncDetailBookmarkUI();
+            renderIngredients();
+            renderVerticalSteps();
+            renderStorySegments();
+            updateCookModeSlide();
+
+            // Switch Views
+            currentView = 'detail';
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('detailView').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToHomeView() {
+            stopAudioInternal();
+            activeAudioId = null;
+            syncAllAudioUI();
+
+            currentView = 'home';
+            document.getElementById('detailView').classList.add('hidden');
+            document.getElementById('homeView').classList.remove('hidden');
+            renderHomeRecipes();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ==========================================================================
+           5. RENDER DETAIL VIEW INGREDIENTS & STEPS
+           ========================================================================== */
+        function renderIngredients() {
+            const listEl = document.getElementById('ingredientsList');
+            const drawerListEl = document.getElementById('drawerIngredientsList');
+            document.getElementById('servingsDisplay').textContent = `${toPersianDigits(currentServings)} نفر`;
+            document.getElementById('drawerServingsCount').textContent = toPersianDigits(currentServings);
+
+            const ratio = currentServings / activeRecipe.defaultServings;
+
+            const htmlContent = activeRecipe.ingredients.map(item => {
+                const isChecked = checkedIngredients.has(item.id);
+                const amountText = item.fixed
+                    ? item.unit
+                    : `${formatQuantity(item.amount * ratio)} ${item.unit}`;
+
+                return `
+                    <div class="ingredient-row ${isChecked ? 'checked' : ''}" data-ing-id="${item.id}">
+                        <div class="ing-right">
+                            <div class="custom-checkbox">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="ing-name">${item.name}</span>
+                        </div>
+                        <span class="ing-amount">${amountText}</span>
+                    </div>
+                `;
+            }).join('');
+
+            listEl.innerHTML = htmlContent;
+            drawerListEl.innerHTML = htmlContent;
+
+            document.querySelectorAll('.ingredient-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const id = Number(row.getAttribute('data-ing-id'));
+                    if (checkedIngredients.has(id)) {
+                        checkedIngredients.delete(id);
+                    } else {
+                        checkedIngredients.add(id);
+                    }
+                    renderIngredients();
+                });
+            });
+        }
+
+        function renderVerticalSteps() {
+            const container = document.getElementById('stepsVerticalList');
+            container.innerHTML = activeRecipe.steps.map((step, index) => {
+                const isThisStepPlaying = (activeAudioId === index && isPlaying);
+                return `
+                    <article class="step-card ${activeAudioId === index ? 'active-audio' : ''}" id="overview-step-${index}">
+                        <div class="step-card-header">
+                            <span class="step-badge">مرحله ${toPersianDigits(step.stepNumber)}</span>
+                            <button type="button" class="step-inline-audio-btn ${isThisStepPlaying ? 'playing' : ''}" data-step-index="${index}">
+                                ${isThisStepPlaying
+                                    ? `<svg viewBox="0 0 24 24" style="width:15px;height:15px;"><rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/></svg><span>توقف صوت</span>`
+                                    : `<svg viewBox="0 0 24 24" style="width:15px;height:15px;"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg><span>پخش صوت (${toPersianDigits(step.duration)} ثانیه)</span>`
+                                }
+                            </button>
+                        </div>
+                        <p class="step-text">${step.text}</p>
+                    </article>
+                `;
+            }).join('');
+
+            container.querySelectorAll('.step-inline-audio-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-step-index'));
+                    toggleAudioTarget(idx);
+                });
+            });
+        }
+
+        /* ==========================================================================
+           6. AUDIO PLAYBACK ENGINE (Supports Real MP3 + Interactive Timer Fallback)
+           ========================================================================== */
+        function toggleAudioTarget(targetId) {
+            if (activeAudioId === targetId) {
+                if (isPlaying) {
+                    pauseAudio();
+                } else {
+                    resumeAudio();
+                }
+            } else {
+                startNewAudio(targetId);
+            }
+        }
+
+        function startNewAudio(targetId) {
+            stopAudioInternal();
+            activeAudioId = targetId;
+            currentAudioTime = 0;
+
+            let targetUrl = '';
+            if (targetId === 'ingredients') {
+                currentAudioDuration = activeRecipe.ingredientsAudioDuration || 15;
+                targetUrl = activeRecipe.ingredientsAudioUrl;
+            } else {
+                const stepObj = activeRecipe.steps[targetId];
+                currentAudioDuration = stepObj.duration || 14;
+                targetUrl = stepObj.audioUrl;
+            }
+
+            realAudioElement.src = targetUrl;
+            realAudioElement.currentTime = 0;
+
+            playFeedbackTone(580, 90);
+            isPlaying = true;
+
+            realAudioElement.play().catch(() => {
+                // Demo fallback timer handles progress smoothly when MP3 is not yet uploaded
+            });
+
+            startProgressInterval();
+            syncAllAudioUI();
+        }
+
+        function resumeAudio() {
+            isPlaying = true;
+            playFeedbackTone(640, 70);
+            realAudioElement.play().catch(() => {});
+            startProgressInterval();
+            syncAllAudioUI();
+        }
+
+        function pauseAudio() {
+            isPlaying = false;
+            playFeedbackTone(420, 70);
+            realAudioElement.pause();
+            clearInterval(audioTimerInterval);
+            syncAllAudioUI();
+        }
+
+        function stopAudioInternal() {
+            isPlaying = false;
+            clearInterval(audioTimerInterval);
+            realAudioElement.pause();
+        }
+
+        function startProgressInterval() {
+            clearInterval(audioTimerInterval);
+            audioTimerInterval = setInterval(() => {
+                if (!isPlaying) return;
+                currentAudioTime += 0.25;
+
+                if (currentAudioTime >= currentAudioDuration) {
+                    currentAudioTime = currentAudioDuration;
+                    isPlaying = false;
+                    clearInterval(audioTimerInterval);
+                    playFeedbackTone(760, 120);
+
+                    setTimeout(() => {
+                        currentAudioTime = 0;
+                        syncAllAudioUI();
+                    }, 400);
+                }
+                syncAllAudioUI();
+            }, 250);
+        }
+
+        function syncAllAudioUI() {
+            // 1. Update Full Ingredients Audio Button
+            const ingBtn = document.getElementById('playIngredientsBtn');
+            const ingText = document.getElementById('playIngredientsText');
+            if (activeAudioId === 'ingredients' && isPlaying) {
+                ingBtn.classList.add('playing');
+                ingText.textContent = `در حال پخش (${formatTime(currentAudioDuration - currentAudioTime)})`;
+            } else {
+                ingBtn.classList.remove('playing');
+                ingText.textContent = 'شنیدن مواد لازم';
+            }
+
+            // 2. Update Overview Vertical Steps Cards
+            renderVerticalSteps();
+
+            // 3. Update Cook Mode Bottom Audio Player
+            const statusLabel = document.getElementById('playerStatusLabel');
+            const timeDisplay = document.getElementById('playerTimeDisplay');
+            const scrubber = document.getElementById('audioScrubber');
+            const playIcon = document.getElementById('playerPlayIcon');
+
+            const stepObj = activeRecipe.steps[currentCookStepIndex];
+            if (!stepObj) return;
+
+            const displayedDuration = (activeAudioId === currentCookStepIndex)
+                ? currentAudioDuration
+                : stepObj.duration;
+            const displayedTime = (activeAudioId === currentCookStepIndex)
+                ? currentAudioTime
+                : 0;
+
+            timeDisplay.textContent = `${formatTime(displayedTime)} / ${formatTime(displayedDuration)}`;
+
+            const pct = displayedDuration > 0 ? (displayedTime / displayedDuration) * 100 : 0;
+            scrubber.value = pct;
+
+            if (activeAudioId === currentCookStepIndex && isPlaying) {
+                statusLabel.textContent = `در حال خواندن مرحله ${toPersianDigits(stepObj.stepNumber)}...`;
+                playIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
+            } else {
+                statusLabel.textContent = `صوت مرحله ${toPersianDigits(stepObj.stepNumber)} آماده پخش`;
+                playIcon.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"/>`;
+            }
+        }
+
+        /* ==========================================================================
+           7. COOK MODE (STORY SEGMENTS, SWIPE CARDS & BOTTOM PLAYER)
+           ========================================================================== */
+        function renderStorySegments() {
+            const container = document.getElementById('storySegments');
+            container.innerHTML = activeRecipe.steps.map((_, idx) => {
+                let stateClass = '';
+                if (idx < currentCookStepIndex) stateClass = 'completed';
+                else if (idx === currentCookStepIndex) stateClass = 'current';
+                return `
+                    <div class="story-segment ${stateClass}" data-segment-index="${idx}">
+                        <div class="story-segment-fill"></div>
+                    </div>
+                `;
+            }).join('');
+
+            container.querySelectorAll('.story-segment').forEach(seg => {
+                seg.addEventListener('click', () => {
+                    const idx = Number(seg.getAttribute('data-segment-index'));
+                    goToCookStep(idx, true);
+                });
+            });
+        }
+
+        function updateCookModeSlide() {
+            const step = activeRecipe.steps[currentCookStepIndex];
+            const total = activeRecipe.steps.length;
+
+            document.getElementById('cookStepCounter').textContent =
+                `مرحله ${toPersianDigits(step.stepNumber)} از ${toPersianDigits(total)}`;
+            document.getElementById('cookCardTitle').textContent = step.title;
+            document.getElementById('cookInstructionText').textContent = step.text;
+
+            const isFirst = currentCookStepIndex === 0;
+            const isLast = currentCookStepIndex === total - 1;
+
+            document.getElementById('playerPrevBtn').disabled = isFirst;
+            document.getElementById('cardPrevBtn').disabled = isFirst;
+            document.getElementById('playerNextBtn').disabled = isLast;
+            document.getElementById('cardNextBtn').disabled = isLast;
+
+            renderStorySegments();
+            syncAllAudioUI();
+        }
+
+        function goToCookStep(newIndex, autoPlayAudio = false) {
+            if (newIndex < 0 || newIndex >= activeRecipe.steps.length) return;
+            const card = document.getElementById('cookStepCard');
+            card.style.opacity = '0.4';
+            card.style.transform = 'scale(0.97)';
+
+            setTimeout(() => {
+                currentCookStepIndex = newIndex;
+                updateCookModeSlide();
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+                if (autoPlayAudio) {
+                    startNewAudio(currentCookStepIndex);
+                }
+            }, 140);
+        }
+
+        function openCookMode() {
+            isCookModeOpen = true;
+            const overlay = document.getElementById('cookModeOverlay');
+            overlay.classList.add('open');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            if (typeof activeAudioId === 'number') {
+                currentCookStepIndex = activeAudioId;
+            }
+            updateCookModeSlide();
+        }
+
+        function closeCookMode() {
+            isCookModeOpen = false;
+            const overlay = document.getElementById('cookModeOverlay');
+            overlay.classList.remove('open');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        /* ==========================================================================
+           8. TOUCH SWIPE GESTURES FOR COOK MODE CARD (LTR Standard)
+           ========================================================================== */
+        function setupTouchSwipe() {
+            const stage = document.getElementById('cookCardStage');
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            stage.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            stage.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diffX = touchEndX - touchStartX;
+
+                // Standard LTR swipe behavior: swipe right-to-left (diffX < 0) goes to next step
+                if (Math.abs(diffX) > 50) {
+                    if (diffX < 0) {
+                        goToCookStep(currentCookStepIndex + 1, isPlaying);
+                    } else {
+                        goToCookStep(currentCookStepIndex - 1, isPlaying);
+                    }
+                }
+            }, { passive: true });
+        }
+
+        /* ==========================================================================
+           9. DARK MODE & SCREEN WAKE LOCK API
+           ========================================================================== */
+        function initTheme() {
+            const savedTheme = localStorage.getItem('recipe_theme') || 'light';
+            applyTheme(savedTheme);
+
+            const toggleThemeHandler = () => {
+                const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+                const next = current === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+                localStorage.setItem('recipe_theme', next);
+            };
+
+            document.getElementById('homeThemeToggleBtn').addEventListener('click', toggleThemeHandler);
+            document.getElementById('detailThemeToggleBtn').addEventListener('click', toggleThemeHandler);
+        }
+
+        function applyTheme(theme) {
+            const icons = document.querySelectorAll('.theme-icon-svg');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icons.forEach(icon => {
+                    icon.innerHTML = `
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    `;
+                });
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                icons.forEach(icon => {
+                    icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+                });
+            }
+        }
+
+        let wakeLockSentinel = null;
+        let wakeLockFallbackActive = false;
+
+        async function toggleWakeLock() {
+            const btn = document.getElementById('wakeLockBtn');
+            const label = document.getElementById('wakeLockText');
+
+            if (wakeLockSentinel || wakeLockFallbackActive) {
+                if (wakeLockSentinel) {
+                    await wakeLockSentinel.release();
+                    wakeLockSentinel = null;
+                }
+                wakeLockFallbackActive = false;
+                btn.classList.remove('active');
+                label.textContent = 'روشن ماندن صفحه';
+                return;
+            }
+
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLockSentinel = await navigator.wakeLock.request('screen');
+                    wakeLockSentinel.addEventListener('release', () => {
+                        btn.classList.remove('active');
+                        label.textContent = 'روشن ماندن صفحه';
+                    });
+                } else {
+                    wakeLockFallbackActive = true;
+                }
+                btn.classList.add('active');
+                label.textContent = 'صفحه روشن می‌ماند';
+                playFeedbackTone(660, 80);
+            } catch (err) {
+                wakeLockFallbackActive = true;
+                btn.classList.add('active');
+                label.textContent = 'صفحه روشن می‌ماند';
+                playFeedbackTone(660, 80);
+            }
+        }
+
+        /* ==========================================================================
+           10. INITIALIZATION & EVENT LISTENERS BINDING
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderHomeCategories();
+            renderHomeRecipes();
+            setupTouchSwipe();
+
+            // Search input real-time filtering
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+            searchInput.addEventListener('input', e => {
+                searchQuery = e.target.value;
+                if (searchQuery.trim().length > 0) {
+                    clearSearchBtn.classList.remove('hidden');
+                } else {
+                    clearSearchBtn.classList.add('hidden');
+                }
+                renderHomeRecipes();
+            });
+
+            clearSearchBtn.addEventListener('click', () => {
+                searchQuery = '';
+                searchInput.value = '';
+                clearSearchBtn.classList.add('hidden');
+                searchInput.focus();
+                renderHomeRecipes();
+            });
+
+            // Saved Bookmarks Filter Button in Home Header
+            const bookmarksFilterBtn = document.getElementById('bookmarksFilterBtn');
+            bookmarksFilterBtn.addEventListener('click', () => {
+                onlySavedFilter = !onlySavedFilter;
+                bookmarksFilterBtn.classList.toggle('active-filter', onlySavedFilter);
+                renderHomeRecipes();
+            });
+
+            // Back to Home button in Detail Header
+            document.getElementById('backToHomeBtn').addEventListener('click', backToHomeView);
+
+            // Bookmark button inside Detail View Hero
+            document.getElementById('detailBookmarkBtn').addEventListener('click', () => {
+                if (activeRecipe) {
+                    toggleBookmark(activeRecipe.id);
+                }
+            });
+
+            // Wake Lock button
+            document.getElementById('wakeLockBtn').addEventListener('click', toggleWakeLock);
+
+            // Servings calculator buttons (- on left, + on right)
+            document.getElementById('decreaseServingsBtn').addEventListener('click', () => {
+                if (currentServings > 1) {
+                    currentServings--;
+                    renderIngredients();
+                }
+            });
+
+            document.getElementById('increaseServingsBtn').addEventListener('click', () => {
+                if (currentServings < 30) {
+                    currentServings++;
+                    renderIngredients();
+                }
+            });
+
+            // Play Full Ingredients Audio
+            document.getElementById('playIngredientsBtn').addEventListener('click', () => {
+                toggleAudioTarget('ingredients');
+            });
+
+            // Open / Close Cook Mode
+            document.getElementById('openCookModeBtn').addEventListener('click', openCookMode);
+            document.getElementById('closeCookModeBtn').addEventListener('click', closeCookMode);
+
+            // Cook Mode Step Navigation Buttons
+            document.getElementById('playerPrevBtn').addEventListener('click', () => {
+                goToCookStep(currentCookStepIndex - 1, true);
+            });
+            document.getElementById('cardPrevBtn').addEventListener('click', () => {
+                goToCookStep(currentCookStepIndex - 1, isPlaying);
+            });
+
+            document.getElementById('playerNextBtn').addEventListener('click', () => {
+                goToCookStep(currentCookStepIndex + 1, true);
+            });
+            document.getElementById('cardNextBtn').addEventListener('click', () => {
+                goToCookStep(currentCookStepIndex + 1, isPlaying);
+            });
+
+            // Cook Mode Main Play/Pause Button
+            document.getElementById('playerPlayPauseBtn').addEventListener('click', () => {
+                toggleAudioTarget(currentCookStepIndex);
+            });
+
+            // Scrubber Seek Bar
+            document.getElementById('audioScrubber').addEventListener('input', e => {
+                const pct = Number(e.target.value);
+                if (activeAudioId !== currentCookStepIndex) {
+                    activeAudioId = currentCookStepIndex;
+                    currentAudioDuration = activeRecipe.steps[currentCookStepIndex].duration;
+                }
+                currentAudioTime = (pct / 100) * currentAudioDuration;
+                if (realAudioElement.duration) {
+                    realAudioElement.currentTime = currentAudioTime;
+                }
+                syncAllAudioUI();
+            });
+
+            // Ingredients Quick Drawer inside Cook Mode
+            const drawerBackdrop = document.getElementById('ingredientsDrawerBackdrop');
+            document.getElementById('openDrawerBtn').addEventListener('click', () => {
+                drawerBackdrop.classList.add('open');
+            });
+            document.getElementById('closeDrawerBtn').addEventListener('click', () => {
+                drawerBackdrop.classList.remove('open');
+            });
+            drawerBackdrop.addEventListener('click', e => {
+                if (e.target === drawerBackdrop) {
+                    drawerBackdrop.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
