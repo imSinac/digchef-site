@@ -6,6 +6,10 @@ const dynamicCategories = [
   {
     "id": "cake",
     "title": "کیک"
+  },
+  {
+    "id": "sweets",
+    "title": "شیرینی"
   }
 ];
 const recipesData = [
