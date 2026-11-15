@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>آشپزخونه | دستیار هوشمند آشپزی</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="../../style.css">
+
+    <title>تست ۲ - طرز تهیه قدم به قدم و صوتی</title>
+    <meta name="description" content="طرز تهیه تست ۲ به صورت مرحله به مرحله همراه با راهنمای صوتی و محاسبه هوشمند مواد اولیه.">
+    <meta property="og:title" content="تست ۲">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/test2.webp">
+    <link rel="canonical" href="https://digchef.ir/recipes/test2/">
+    <script type="application/ld+json">{"@context": "https://schema.org/", "@type": "Recipe", "name": "تست ۲", "image": ["https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/test2.webp"], "recipeCategory": "شیرینی", "recipeYield": "4 نفر", "recipeIngredient": [], "recipeInstructions": []}</script>
+    <script>window.__INITIAL_RECIPE_ID__ = 3;</script>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- VIEW 1: HOME VIEW -->
+        <div id="homeView" class="view-page home-view-wrapper">
+            <header class="top-navbar">
+                <div class="brand-title">
+                    <div class="brand-logo-box">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-1v4a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-4H7a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3h1V6a4 4 0 0 1 4-4z"/>
+                        </svg>
+                    </div>
+                    <span>آشپزخونه صوتی</span>
+                </div>
+
+                <div class="nav-actions">
+                    <button type="button" id="bookmarksFilterBtn" class="icon-btn" aria-label="علاقه‌مندی‌ها">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span id="bookmarkCountBadge" class="bookmark-count-badge hidden">۰</span>
+                    </button>
+
+                    <button type="button" id="homeThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
+                        <svg class="theme-icon-svg" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="search-section">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="جستجوی نام غذا یا مواد اولیه (مثلاً: مرغ، قارچ)...">
+                    <button type="button" id="clearSearchBtn" class="clear-search-btn hidden" aria-label="پاک کردن جستجو">
+                        <svg viewBox="0 0 24 24" style="width:15px;height:15px;">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="categoryPillsContainer" class="categories-scroll"></div>
+
+            <section id="featuredSection" class="featured-section">
+                <div id="featuredCardContainer"></div>
+            </section>
+
+            <section class="recipes-list-section">
+                <div class="list-header-row">
+                    <h2 id="listSectionTitle" class="section-title">همه دستور پخت‌ها</h2>
+                    <span id="recipesCountLabel" class="list-count-text">۰ دستور</span>
+                </div>
+
+                <div id="recipesGrid" class="recipe-cards-grid"></div>
+            </section>
+        </div>
+
+        <!-- VIEW 2: RECIPE DETAIL VIEW -->
+        <div id="detailView" class="view-page detail-view-wrapper hidden">
+            <header class="top-navbar">
+                <button type="button" id="backToHomeBtn" class="back-nav-btn">
+                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                    <span>صفحه اصلی</span>
+                </button>
+
+                <div class="nav-actions">
+                    <button type="button" id="wakeLockBtn" class="wake-lock-btn">
+                        <span class="wake-dot"></span>
+                        <span id="wakeLockText">روشن ماندن صفحه</span>
+                    </button>
+
+                    <button type="button" id="detailThemeToggleBtn" class="icon-btn" aria-label="تغییر تم">
+                        <svg class="theme-icon-svg" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <section class="hero-section">
+                <div class="dish-image-wrapper">
+                    <img id="dishImage" class="dish-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="تصویر غذا">
+                    <span id="difficultyBadge" class="difficulty-badge"></span>
+                    <button type="button" id="detailBookmarkBtn" class="detail-bookmark-fab" aria-label="ذخیره دستور">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <h1 id="recipeTitle" class="recipe-title"></h1>
+                <p id="recipeSubtitle" class="recipe-subtitle"></p>
+
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">زمان پخت</span>
+                        <span id="prepTime" class="meta-value"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">کالری</span>
+                        <span id="cookTime" class="meta-value"></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">تعداد مراحل</span>
+                        <span id="totalStepsMeta" class="meta-value"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">مواد لازم</h2>
+                </div>
+
+                <div class="servings-bar">
+                    <span class="servings-label">تعداد نفرات:</span>
+                    <div class="servings-controls">
+                        <button type="button" id="decreaseServingsBtn" class="qty-btn" aria-label="کاهش نفرات">−</button>
+                        <span id="servingsDisplay" class="servings-count">۴ نفر</span>
+                        <button type="button" id="increaseServingsBtn" class="qty-btn" aria-label="افزایش نفرات">+</button>
+                    </div>
+                </div>
+
+                <div id="ingredientsList" class="ingredients-card"></div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">مراحل پخت قدم به قدم</h2>
+                </div>
+                <div id="stepsVerticalList" class="steps-list"></div>
+            </section>
+
+            <div class="bottom-cta-bar">
+                <button type="button" id="openCookModeBtn" class="start-cook-btn">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+                    </svg>
+                    <span>شروع حالت آشپزی (مرحله به مرحله)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- FULL-SCREEN COOK MODE OVERLAY -->
+        <div id="cookModeOverlay" class="cook-mode-overlay" aria-hidden="true">
+            <div class="cook-top-bar">
+                <div id="storySegments" class="story-segments"></div>
+
+                <div class="cook-header-controls">
+                    <div class="cook-header-right">
+                        <button type="button" id="closeCookModeBtn" class="close-cook-btn" aria-label="بستن حالت آشپزی">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+
+                        <button type="button" id="openDrawerBtn" class="peek-ingredients-btn">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                            <span>مواد لازم</span>
+                        </button>
+                    </div>
+
+                    <span id="cookStepCounter" class="cook-step-counter">مرحله ۱</span>
+                </div>
+            </div>
+
+            <div id="cookCardStage" class="cook-card-stage">
+                <div id="cookStepCard" class="cook-step-card">
+                    <div>
+                        <div class="cook-card-top">
+                            <span id="cookCardTitle" class="cook-card-title">مرحله اول</span>
+                        </div>
+                        <p id="cookInstructionText" class="cook-instruction-text"></p>
+                    </div>
+
+                    <div class="swipe-hint-bar">
+                        <button type="button" id="cardPrevBtn" class="nav-step-inline-btn">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <polyline points="15 18 9 12 15 6"/>
+                            </svg>
+                            <span>مرحله قبل</span>
+                        </button>
+                        <span>ورق بزنید (سوایپ)</span>
+                        <button type="button" id="cardNextBtn" class="nav-step-inline-btn">
+                            <span>مرحله بعد</span>
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cook-audio-player">
+                <div class="player-status-row">
+                    <span id="playerStatusLabel">آماده پخش صوت مرحله</span>
+                    <span id="playerTimeDisplay" class="time-display">۰۰:۰۰ / ۰۰:۰۰</span>
+                </div>
+
+                <div class="scrubber-container">
+                    <input type="range" id="audioScrubber" class="audio-scrubber" min="0" max="100" value="0">
+                </div>
+
+                <div class="player-controls-row">
+                    <button type="button" id="playerPrevBtn" class="player-nav-btn">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="19 20 9 12 19 4 19 20"/>
+                            <line x1="5" y1="19" x2="5" y2="5"/>
+                        </svg>
+                        <span>قبلی</span>
+                    </button>
+
+                    <button type="button" id="playerPlayPauseBtn" class="player-main-play-btn" aria-label="پخش یا توقف">
+                        <svg id="playerPlayIcon" viewBox="0 0 24 24">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                    </button>
+
+                    <button type="button" id="playerNextBtn" class="player-nav-btn">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="5 4 15 12 5 20 5 4"/>
+                            <line x1="19" y1="5" x2="19" y2="19"/>
+                        </svg>
+                        <span>بعدی</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="ingredientsDrawerBackdrop" class="ingredients-drawer-backdrop">
+            <div class="ingredients-drawer">
+                <div class="drawer-header">
+                    <span class="drawer-title">چک‌لیست مواد لازم (<span id="drawerServingsCount">۴</span> نفر)</span>
+                    <button type="button" id="closeDrawerBtn" class="close-cook-btn" style="width:32px;height:32px;">
+                        <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="drawerIngredientsList" class="ingredients-card"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../data.js"></script>
+    <script src="../../app.js" defer></script>
+</body>
+</html>
