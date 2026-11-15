@@ -25,8 +25,21 @@ const recipesData = [
     "defaultServings": 4,
     "featured": false,
     "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/test2.webp",
-    "ingredients": [],
-    "steps": []
+    "ingredients": [
+      {
+        "id": 1,
+        "name": "تست",
+        "amount": 2.0,
+        "unit": "کیلو"
+      }
+    ],
+    "steps": [
+      {
+        "title": "تست",
+        "text": "تست",
+        "audio": ""
+      }
+    ]
   },
   {
     "id": 2,
