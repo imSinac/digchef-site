@@ -159,7 +159,7 @@ function renderFeaturedSuggestion() {
 
     container.innerHTML = `
         <div class="featured-card" data-open-recipe="${featuredRecipe.id}">
-            <img class="featured-img" src="${featuredRecipe.image}" alt="${featuredRecipe.title}" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Chef+Choice'">
+            <img class="featured-img" src="${featuredRecipe.image}" alt="${featuredRecipe.title}">
             <div class="featured-gradient">
                 <div class="featured-top-badges">
                     <span class="chef-badge">
@@ -268,7 +268,7 @@ function renderHomeRecipes() {
         return `
             <article class="home-recipe-card" data-recipe-id="${recipe.id}">
                 <div class="card-thumb-wrapper">
-                    <img class="card-thumb-img" src="${recipe.image}" alt="${recipe.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400/EA580C/FFFFFF?text=Food+Photo'">
+                    <img class="card-thumb-img" src="${recipe.image}" alt="${recipe.title}" loading="lazy">
                     <span class="card-category-badge">${recipe.catName}</span>
 
                     <button type="button" class="card-bookmark-btn ${isSaved ? 'saved' : ''}" data-bookmark-id="${recipe.id}" aria-label="افزودن به علاقه‌مندی‌ها">
