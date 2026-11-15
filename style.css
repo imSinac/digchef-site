@@ -445,7 +445,7 @@ svg {
 .card-thumb-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9.5;
+    aspect-ratio: 16 / 9;
     background-color: var(--bg-subtle);
     overflow: hidden;
 }
@@ -612,7 +612,7 @@ svg {
 
 .dish-image-wrapper {
     width: 100%;
-    height: 245px;
+    aspect-ratio: 16 / 9;
     border-radius: var(--radius-lg);
     overflow: hidden;
     position: relative;
@@ -679,10 +679,10 @@ svg {
 
 .meta-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
     background-color: var(--bg-surface);
-    padding: 12px;
+    padding: 12px 8px;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);

@@ -1,11 +1,6 @@
-const categoriesList = typeof dynamicCategories !== 'undefined' ? dynamicCategories : [
-    { id: "همه", title: "همه" },
-    { id: "polo", title: "چلو و پلو" },
-    { id: "khoresht", title: "خورشت" },
-    { id: "kebab", title: "کباب و گریل" },
-    { id: "pasta", title: "فرنگی و پاستا" },
-    { id: "soup", title: "سوپ و آش" }
-];
+const categoriesList = (typeof dynamicCategories !== 'undefined' && dynamicCategories.length > 0)
+    ? dynamicCategories
+    : [{ id: "همه", title: "همه" }];
 
 const siteBasePath = window.location.pathname
     .split('/recipes/')[0]
@@ -19,13 +14,17 @@ function normalizeRecipe(r) {
         text: s.text || '',
         audioUrl: s.audio || s.audioUrl || ''
     }));
-    const ingredients = (r.ingredients || []).map((ing, idx) => ({
-        id: ing.id !== undefined ? ing.id : (idx + 1),
-        name: ing.name || '',
-        amount: parseFloat(ing.amount) || 1,
-        unit: ing.unit || '',
-        fixed: !!ing.fixed
-    }));
+    const ingredients = (r.ingredients || []).map((ing, idx) => {
+        const amt = parseFloat(ing.amount);
+        const isFixed = Boolean(ing.fixed) || isNaN(amt) || amt === 0;
+        return {
+            id: ing.id !== undefined ? ing.id : (idx + 1),
+            name: ing.name || '',
+            amount: isFixed ? 0 : amt,
+            unit: ing.unit || (isFixed ? 'به میزان لازم' : ''),
+            fixed: isFixed
+        };
+    });
     return {
         id: String(r.id),
         slug: r.slug || String(r.id),
@@ -35,8 +34,9 @@ function normalizeRecipe(r) {
         catName: r.catName || r.category || 'آشپزی',
         isFeatured: Boolean(r.featured !== undefined ? r.featured : r.isFeatured),
         image: r.image || '',
-        prepTime: r.time || r.prepTime || '۶۰ دقیقه',
-        cookTime: r.calories || r.cookTime || '۵۰۰ کالری',
+        prepTime: r.prepTime || r.time || '۳۰ دقیقه',
+        cookTime: r.cookTime || '۴۵ دقیقه',
+        calories: r.calories || '۵۰۰ کالری',
         difficulty: r.difficulty || 'متوسط',
         defaultServings: Number(r.defaultServings) || 4,
         ingredients,
@@ -179,7 +179,7 @@ function renderFeaturedSuggestion() {
                 <div class="featured-info">
                     <h2>${featuredRecipe.title}</h2>
                     <div class="featured-meta">
-                        <span>⏱ زمان: ${featuredRecipe.prepTime}</span>
+                        <span>⏱ پخت: ${featuredRecipe.cookTime}</span>
                         <span>•</span>
                         <span>🔥 سختی: ${featuredRecipe.difficulty}</span>
                         <span>•</span>
@@ -296,7 +296,7 @@ function renderHomeRecipes() {
                                     <circle cx="12" cy="12" r="10"/>
                                     <polyline points="12 6 12 12 16 14"/>
                                 </svg>
-                                ${recipe.prepTime}
+                                پخت: ${recipe.cookTime}
                             </span>
                             <span class="meta-pill-inline">
                                 <svg viewBox="0 0 24 24">
@@ -383,6 +383,8 @@ function openRecipe(recipeId, updateUrl = true) {
     document.getElementById('recipeSubtitle').textContent = activeRecipe.subtitle;
     document.getElementById('prepTime').textContent = activeRecipe.prepTime;
     document.getElementById('cookTime').textContent = activeRecipe.cookTime;
+    const calEl = document.getElementById('caloriesMeta');
+    if (calEl) calEl.textContent = activeRecipe.calories;
     document.getElementById('totalStepsMeta').textContent = `${toPersianDigits(activeRecipe.steps.length)} مرحله`;
 
     document.title = `${activeRecipe.title} - طرز تهیه قدم به قدم و صوتی`;
@@ -440,7 +442,7 @@ function renderIngredients() {
     const htmlContent = activeRecipe.ingredients.map(item => {
         const isChecked = checkedIngredients.has(item.id);
         const amountText = item.fixed
-            ? item.unit
+            ? (item.unit || 'به میزان لازم')
             : `${formatQuantity(item.amount * ratio)} ${item.unit}`;
 
         return `
@@ -479,7 +481,7 @@ function renderVerticalSteps() {
     container.innerHTML = activeRecipe.steps.map((step, index) => {
         const isThisStepPlaying = (activeAudioId === index && isPlaying);
         return `
-            <article class="step-card ${activeAudioId === index ? 'active-audio' : ''}" id="overview-step-${index}">
+            <article class="step-card ${activeAudioId === index ? 'active-audio' : ''}" id="step-${index + 1}">
                 <div class="step-card-header">
                     <span class="step-badge">${step.title || ('مرحله ' + toPersianDigits(step.stepNumber))}</span>
                     ${step.audioUrl ? `
