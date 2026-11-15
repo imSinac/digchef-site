@@ -14,34 +14,6 @@ const dynamicCategories = [
 ];
 const recipesData = [
   {
-    "id": 3,
-    "slug": "test2",
-    "title": "تست ۲",
-    "category": "sweets",
-    "catName": "شیرینی",
-    "time": "۶۰ دقیقه",
-    "difficulty": "متوسط",
-    "calories": "۵۰۰ کالری",
-    "defaultServings": 4,
-    "featured": false,
-    "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/test2.webp",
-    "ingredients": [
-      {
-        "id": 1,
-        "name": "تست",
-        "amount": 2.0,
-        "unit": "کیلو"
-      }
-    ],
-    "steps": [
-      {
-        "title": "تست",
-        "text": "تست",
-        "audio": ""
-      }
-    ]
-  },
-  {
     "id": 2,
     "slug": "test",
     "title": "تست",
