@@ -24,7 +24,7 @@ const recipesData = [
     "calories": "۵۰۰ کالری",
     "defaultServings": 4,
     "featured": false,
-    "image": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/test.webp",
+    "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/test.webp",
     "ingredients": [],
     "steps": [
       {
@@ -45,7 +45,7 @@ const recipesData = [
     "calories": "۵۰۰ کالری",
     "defaultServings": 4,
     "featured": true,
-    "image": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/images/cake-yazdi.webp",
+    "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/cake-yazdi.webp",
     "ingredients": [
       {
         "id": 1,
@@ -64,7 +64,7 @@ const recipesData = [
       {
         "title": "آماده‌سازی اولیه",
         "text": "نیم ساعت قبل از اینکه دست‌به‌کار بشی، همه مواد رو از یخچال بیار بیرون تا هم‌دمای محیط بشن. فِر رو هم روی ۲۱۰ درجه روشن کن تا حسابی گرم بشه.",
-        "audio": "https://cdn.jsdelivr.net/gh/imSinac/recipe-media@main/audio/cake-yazdi-step-1.wav"
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/audio/cake-yazdi-step-1.wav"
       }
     ]
   }
