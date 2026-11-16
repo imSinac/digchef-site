@@ -10,9 +10,135 @@ const dynamicCategories = [
   {
     "id": "sweets",
     "title": "شیرینی"
+  },
+  {
+    "id": "stew",
+    "title": "خورشت"
   }
 ];
 const recipesData = [
+  {
+    "id": 5,
+    "slug": "apple-cinnamon-pie-cake",
+    "title": "کیک پای سیب و دارچین تابه‌ای",
+    "category": "cake",
+    "catName": "کیک",
+    "prepTime": "۱۵ دقیقه",
+    "cookTime": "۳۰ دقیقه",
+    "difficulty": "آسان",
+    "calories": "۳۲۰ کالری",
+    "defaultServings": 6,
+    "featured": false,
+    "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/apple-cinnamon-pie-cake.webp",
+    "ingredients": [
+      {
+        "id": 1,
+        "name": "شکر (برای کارامل)",
+        "amount": 2.0,
+        "unit": "قاشق غذاخوری",
+        "fixed": false
+      },
+      {
+        "id": 2,
+        "name": "کره",
+        "amount": 1.0,
+        "unit": "تکه کوچک",
+        "fixed": false
+      },
+      {
+        "id": 3,
+        "name": "سیب",
+        "amount": 2.0,
+        "unit": "عدد",
+        "fixed": false
+      },
+      {
+        "id": 4,
+        "name": "پودر دارچین",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 5,
+        "name": "تخم مرغ",
+        "amount": 1.0,
+        "unit": "عدد",
+        "fixed": false
+      },
+      {
+        "id": 6,
+        "name": "وانیل",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 7,
+        "name": "شکر (برای مایه کیک)",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 8,
+        "name": "روغن مایع",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 9,
+        "name": "شیر",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 10,
+        "name": "آرد",
+        "amount": 1.0,
+        "unit": "پیمانه",
+        "fixed": false
+      },
+      {
+        "id": 11,
+        "name": "گردو خرد شده",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      },
+      {
+        "id": 12,
+        "name": "بیکینگ پودر",
+        "amount": 0.0,
+        "unit": "به میزان لازم",
+        "fixed": true
+      }
+    ],
+    "steps": [
+      {
+        "title": "مرحله اول: آماده کردن کارامل و سیب‌ها",
+        "text": "ابتدا دو قاشق شکر را داخل تابه بریز و روی حرارت کم بگذار تا کاراملی شود، سپس یک تکه کره به آن اضافه کن. دو عدد سیب را پوست بگیر، خرد کن، کف تابه روی کارامل بچین، روی آن‌ها پودر دارچین بپاش و تابه را کنار بگذار.",
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/audio/apple-cinnamon-pie-cake-step-1.wav"
+      },
+      {
+        "title": "مرحله دوم: آماده کردن مایه کیک",
+        "text": "در یک کاسه مناسب، تخم مرغ و وانیل را با هم بزن تا از حالت لختگی خارج شود. بعد شکر، روغن مایع و شیر را به آن اضافه کن و خوب مخلوط کن تا یکدست شوند.",
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/audio/apple-cinnamon-pie-cake-step-2.wav"
+      },
+      {
+        "title": "مرحله سوم: افزودن مواد خشک",
+        "text": "آرد، بیکینگ پودر و گردوی خرد شده را با هم روی مایه کیک الک کن و هم بزن تا خمیر کیک آماده شود؛ این کار کمک می‌کند گردوها داخل کیک ته‌نشین نشوند.",
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/audio/apple-cinnamon-pie-cake-step-3.wav"
+      },
+      {
+        "title": "مرحله چهارم: پخت کیک روی اجاق گاز",
+        "text": "مایه کیک را به آرامی روی سیب‌های داخل تابه بریز و پخش کن. درب تابه را با دم‌کنی بپوشان، تابه را روی شعله پخشکن با حرارت ملایم قرار بده و سی دقیقه زمان بده تا کیک خوش‌عطر تو به خوبی بپزد.",
+        "audio": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/audio/apple-cinnamon-pie-cake-step-4.wav"
+      }
+    ]
+  },
   {
     "id": 4,
     "slug": "homemade-yazdi-cake",
