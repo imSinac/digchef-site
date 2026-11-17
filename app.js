@@ -8,12 +8,21 @@ const siteBasePath = window.location.pathname
     .replace(/\/$/, '');
 
 function normalizeRecipe(r) {
-    const steps = (r.steps || []).map((s, idx) => ({
-        stepNumber: s.stepNumber || (idx + 1),
-        title: s.title || `مرحله ${idx + 1}`,
-        text: s.text || '',
-        audioUrl: s.audio || s.audioUrl || ''
-    }));
+    const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+    const steps = (r.steps || []).map((s, idx) => {
+        let audioUrl = s.audio || s.audioUrl || '';
+        if (isLocal && audioUrl) {
+            const fileName = audioUrl.split('/').pop().split('?')[0];
+            audioUrl = `/local_media/audio/${fileName}`;
+        }
+        return {
+            stepNumber: s.stepNumber || (idx + 1),
+            title: s.title || `مرحله ${idx + 1}`,
+            text: s.text || '',
+            audioUrl: audioUrl
+        };
+    });
     const ingredients = (r.ingredients || []).map((ing, idx) => {
         const amt = parseFloat(ing.amount);
         const isFixed = Boolean(ing.fixed) || isNaN(amt) || amt === 0;
@@ -25,6 +34,13 @@ function normalizeRecipe(r) {
             fixed: isFixed
         };
     });
+
+    let imageUrl = r.image || '';
+    if (isLocal && imageUrl) {
+        const fileName = imageUrl.split('/').pop().split('?')[0];
+        imageUrl = `/local_media/images/${fileName}`;
+    }
+
     return {
         id: String(r.id),
         slug: r.slug || String(r.id),
@@ -33,7 +49,7 @@ function normalizeRecipe(r) {
         category: r.category || '',
         catName: r.catName || r.category || 'آشپزی',
         isFeatured: Boolean(r.featured !== undefined ? r.featured : r.isFeatured),
-        image: r.image || '',
+        image: imageUrl,
         prepTime: r.prepTime || r.time || '۳۰ دقیقه',
         cookTime: r.cookTime || '۴۵ دقیقه',
         calories: r.calories || '۵۰۰ کالری',
