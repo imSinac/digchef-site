@@ -325,6 +325,63 @@ svg {
     padding: 6px 16px 16px;
 }
 
+.featured-slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.featured-slider-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: var(--radius-lg);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.featured-slider-track:active {
+    cursor: grabbing;
+}
+
+.featured-slider-track::-webkit-scrollbar {
+    display: none;
+}
+
+.featured-slider-track .featured-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+.featured-slider-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.slider-dot.active {
+    width: 22px;
+    border-radius: 10px;
+    background-color: var(--accent);
+}
+
 .featured-card {
     position: relative;
     border-radius: var(--radius-lg);

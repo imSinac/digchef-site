@@ -156,6 +156,8 @@ function renderHomeCategories() {
     });
 }
 
+let featuredAutoSlideTimer = null;
+
 function renderFeaturedSuggestion() {
     const section = document.getElementById('featuredSection');
     const container = document.getElementById('featuredCardContainer');
@@ -167,15 +169,20 @@ function renderFeaturedSuggestion() {
         onlySavedFilter
     ) {
         section.classList.add('hidden');
+        if (featuredAutoSlideTimer) clearInterval(featuredAutoSlideTimer);
         return;
     }
 
-    const featuredRecipe = normalizedRecipes.find(r => r.isFeatured) || normalizedRecipes[0];
+    let featuredList = normalizedRecipes.filter(r => r.isFeatured).slice(0, 3);
+    if (featuredList.length === 0 && normalizedRecipes.length > 0) {
+        featuredList = [normalizedRecipes[0]];
+    }
+
     section.classList.remove('hidden');
 
-    container.innerHTML = `
-        <div class="featured-card" data-open-recipe="${featuredRecipe.id}">
-            <img class="featured-img" src="${featuredRecipe.image}" alt="${featuredRecipe.title}">
+    const slidesHtml = featuredList.map(rec => `
+        <div class="featured-card" data-open-recipe="${rec.id}">
+            <img class="featured-img" src="${rec.image}" alt="${rec.title}">
             <div class="featured-gradient">
                 <div class="featured-top-badges">
                     <span class="chef-badge">
@@ -193,21 +200,112 @@ function renderFeaturedSuggestion() {
                     </span>
                 </div>
                 <div class="featured-info">
-                    <h2>${featuredRecipe.title}</h2>
+                    <h2>${rec.title}</h2>
                     <div class="featured-meta">
-                        <span>⏱ پخت: ${featuredRecipe.cookTime}</span>
+                        <span>⏱ پخت: ${rec.cookTime}</span>
                         <span>•</span>
-                        <span>🔥 سختی: ${featuredRecipe.difficulty}</span>
+                        <span>🔥 سختی: ${rec.difficulty}</span>
                         <span>•</span>
-                        <span>🎙 ${toPersianDigits(featuredRecipe.steps.length)} مرحله صوتی</span>
+                        <span>🎙 ${toPersianDigits(rec.steps.length)} مرحله صوتی</span>
                     </div>
                 </div>
             </div>
         </div>
+    `).join('');
+
+    let dotsHtml = '';
+    if (featuredList.length > 1) {
+        dotsHtml = `
+            <div class="featured-slider-dots">
+                ${featuredList.map((_, i) => `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-dot-idx="${i}"></span>`).join('')}
+            </div>
+        `;
+    }
+
+    container.innerHTML = `
+        <div class="featured-slider-wrapper">
+            <div class="featured-slider-track" id="featuredSliderTrack">
+                ${slidesHtml}
+            </div>
+            ${dotsHtml}
+        </div>
     `;
 
-    container.querySelector('.featured-card').addEventListener('click', () => {
-        openRecipe(featuredRecipe.id, true);
+    const track = container.querySelector('#featuredSliderTrack');
+    const cards = Array.from(container.querySelectorAll('.featured-card'));
+    const dots = Array.from(container.querySelectorAll('.slider-dot'));
+
+    let isPointerDown = false;
+    let startX = 0;
+    let scrollLeftStart = 0;
+    let draggedDistance = 0;
+
+    function updateActiveDot() {
+        if (!dots.length) return;
+        const scroll = Math.abs(track.scrollLeft);
+        const cardWidth = track.clientWidth || 1;
+        const activeIdx = Math.min(featuredList.length - 1, Math.max(0, Math.round(scroll / cardWidth)));
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === activeIdx);
+        });
+    }
+
+    track.addEventListener('scroll', updateActiveDot, { passive: true });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const idx = Number(dot.dataset.dotIdx);
+            if (cards[idx]) {
+                cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        });
+    });
+
+    cards.forEach(card => {
+        card.addEventListener('click', e => {
+            if (draggedDistance > 8) {
+                e.preventDefault();
+                return;
+            }
+            const recId = card.getAttribute('data-open-recipe');
+            openRecipe(recId, true);
+        });
+    });
+
+    // Mouse drag support for desktop
+    track.addEventListener('mousedown', e => {
+        isPointerDown = true;
+        draggedDistance = 0;
+        startX = e.pageX;
+        scrollLeftStart = track.scrollLeft;
+        track.style.scrollBehavior = 'auto';
+    });
+
+    window.addEventListener('mousemove', e => {
+        if (!isPointerDown) return;
+        const diff = e.pageX - startX;
+        draggedDistance = Math.abs(diff);
+        track.scrollLeft = scrollLeftStart - diff;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        track.style.scrollBehavior = 'smooth';
+        setTimeout(() => { draggedDistance = 0; }, 50);
+    });
+
+    // Touch support drag distance check
+    track.addEventListener('touchstart', () => {
+        draggedDistance = 0;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', () => {
+        draggedDistance = 20;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+        setTimeout(() => { draggedDistance = 0; }, 50);
     });
 }
 

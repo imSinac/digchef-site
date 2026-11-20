@@ -4,16 +4,16 @@ const dynamicCategories = [
     "title": "همه"
   },
   {
-    "id": "cake",
-    "title": "کیک"
+    "id": "stew",
+    "title": "خورشت"
   },
   {
     "id": "sweets",
     "title": "شیرینی"
   },
   {
-    "id": "stew",
-    "title": "خورشت"
+    "id": "cake",
+    "title": "کیک"
   }
 ];
 const recipesData = [
@@ -28,7 +28,7 @@ const recipesData = [
     "difficulty": "آسان",
     "calories": "۳۲۰ کالری",
     "defaultServings": 6,
-    "featured": false,
+    "featured": true,
     "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/apple-cinnamon-pie-cake.webp",
     "ingredients": [
       {
@@ -150,7 +150,7 @@ const recipesData = [
     "difficulty": "آسان",
     "calories": "۲۱۰ کالری",
     "defaultServings": 12,
-    "featured": false,
+    "featured": true,
     "image": "https://cdn.jsdelivr.net/gh/imSinac/digchef-media@main/images/homemade-yazdi-cake.webp",
     "ingredients": [
       {
